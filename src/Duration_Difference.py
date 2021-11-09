@@ -34,8 +34,8 @@ def rounding_off(number):
 #compare the elevation of each date and see if there is an increase or decrease (i.e., day 1 vs day 2; day 2 vs day 3)
 
 def elev_decrease_equal(number1, number2):
-    number1 = rounding_off(number1)
-    number2 = rounding_off(number2)
+    #number1 = rounding_off(number1)
+    #number2 = rounding_off(number2)
     return (number2 <= number1)
     
 #if Day X is less or equal to Day Y, then that is included in the drawdown period.
@@ -86,7 +86,7 @@ def writeSimplePercentDifferenceCSV(filename, ListofList):
     
 # Main
 
-ElevationDataFrame = ReadElevationData("/Users/rdel1cmc/Desktop/rdel1cmc/Desktop/Carra ACE-IT computer/wetlands and coastal/todd/bureau of reclamation/FY21 Info/Yale Project/Habitat_hydrological_data_2021-04-20/Established_Elevation_csv/Apache_Lake_elevation_daily.csv")
+ElevationDataFrame = ReadElevationData("/Users/rdel1cmc/Desktop/rdel1cmc/Desktop/Carra_ACE-IT_computer/wetlands and coastal/todd/bureau of reclamation/FY21 Info/Yale Project/Negative_Elevation_csv/Silver_Jack_Reservoir_elevation_daily_without_missing.csv")
 start_date = str(input("What is the start date for this data frame (in format m/d/y): "))
 end_date = str(input("What is the end date for this data frame (in format m/d/y): "))
 #start_date = "1/1/97"
