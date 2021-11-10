@@ -13,21 +13,15 @@ Created on Thu Nov  4 09:15:13 2021
 #read in the .csv file
 
 import pandas as pd
-import math
+
 
 def ReadElevationData(filename):
     return pd.read_csv(filename, index_col ="Date")
 
 #apply a rounding rule to the elevation data in each csv cell
 
-def truncate(number, decimals=0):
-    if decimals == 0:
-        return math.trunc(number)
-    factor = 10**decimals
-    return math.trunc(number*factor)/factor
 
 def rounding_off(number):
-    truncate(number, 1) 
     return round(number*2)/2
 
     
@@ -86,6 +80,7 @@ def writeSimplePercentDifferenceCSV(filename, ListofList):
     
 # Main
 
+
 ElevationDataFrame = ReadElevationData("/Users/rdel1cmc/Desktop/rdel1cmc/Desktop/Carra_ACE-IT_computer/wetlands and coastal/todd/bureau of reclamation/FY21 Info/Yale Project/Negative_Elevation_csv/Silver_Jack_Reservoir_elevation_daily_without_missing.csv")
 start_date = str(input("What is the start date for this data frame (in format m/d/y): "))
 end_date = str(input("What is the end date for this data frame (in format m/d/y): "))
@@ -93,6 +88,7 @@ end_date = str(input("What is the end date for this data frame (in format m/d/y)
 #end_date = "1/1/98"
 ListOfList = drawdown_list(ElevationDataFrame, start_date, end_date)
 writeSimplePercentDifferenceCSV("Trial.csv", ListOfList)
+
 
 
 
