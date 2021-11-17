@@ -16,10 +16,6 @@ import pandas as pd
 import collections
 
 
-def ReadElevationData(filename):
-    return pd.read_csv(filename, index_col ="Date")
-
-
 pathname = "/Users/rdel1cmc/Desktop/rdel1cmc/Desktop/Carra_ACE-IT_computer/wetlands_and_coastal/todd/bureau_of_reclamation/FY21_Info/Yale_Project/"
 filename = "Metadata_File_for_runs.csv"
 
@@ -40,6 +36,12 @@ def filedimensions(filename):
     return filename.shape[0]
 
 readmetadatafile = readfilename(pathname + filename)
+
+def ReadElevationData(filename):
+    return pd.read_csv(filename, index_col ="Date")
+
+
+
 
 '''
 file_dimensions = filedimensions(readmetadatafile)
@@ -129,6 +131,7 @@ def writeSimplePercentDifferenceCSV(filename, ListofList):
 
 
 ElevationDataFrame = ReadElevationData(pathname + readCSVfile(readmetadatafile,0))
+print(ElevationDataFrame)
 
 start_date = getstartdate(readmetadatafile,0)
 end_date = getenddate(readmetadatafile,0)
