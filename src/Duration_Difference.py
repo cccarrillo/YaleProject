@@ -16,7 +16,7 @@ import pandas as pd
 import collections
 
 
-pathname = "/Users/rdel1cmc/Desktop/rdel1cmc/Desktop/Carra_ACE-IT_computer/wetlands_and_coastal/todd/bureau_of_reclamation/FY21_Info/Yale_Project/"
+pathname = "/Users/rdel1cmc/Desktop/rdel1cmc/Desktop/Carra_ACE-IT_computer/wetlands_and_coastal/todd/bureau_of_reclamation/FY21_Info/Yale_Project/YaleProject/"
 filename = "Metadata_File_for_runs.csv"
 
 
@@ -46,6 +46,7 @@ def ReadElevationData(filename):
 '''
 file_dimensions = filedimensions(readmetadatafile)
 for i in range(file_dimensions):
+    print("The file name is: {}".format(readCSVfile(readmetadatafile,i)))
     print(readCSVfile(readmetadatafile,i)) 
 '''
 
@@ -129,16 +130,19 @@ def writeSimplePercentDifferenceCSV(filename, ListofList):
     
 # Main
 
+file_dimensions = filedimensions(readmetadatafile)
+for i in range(file_dimensions):
+    print("The file name is: {}".format(readCSVfile(readmetadatafile,i)))
+    print(readCSVfile(readmetadatafile,i)) 
+    ElevationDataFrame = ReadElevationData(pathname + readCSVfile(readmetadatafile,0))
+    print(ElevationDataFrame)
 
-ElevationDataFrame = ReadElevationData(pathname + readCSVfile(readmetadatafile,0))
-print(ElevationDataFrame)
-
-start_date = getstartdate(readmetadatafile,0)
-end_date = getenddate(readmetadatafile,0)
+    start_date = getstartdate(readmetadatafile,0)
+    end_date = getenddate(readmetadatafile,0)
 #start_date = "1/1/97"
 #end_date = "1/1/98"
-ListOfList = drawdown_list(ElevationDataFrame, start_date, end_date)
-writeSimplePercentDifferenceCSV("Trial.csv", ListOfList)
+    ListOfList = drawdown_list(ElevationDataFrame, start_date, end_date)
+    writeSimplePercentDifferenceCSV("Trial_"+str(i)+".csv", ListOfList)
 
 
 
