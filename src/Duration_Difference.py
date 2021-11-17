@@ -16,8 +16,6 @@ import pandas as pd
 import collections
 
 
-pathname = "/Users/rdel1cmc/Desktop/rdel1cmc/Desktop/Carra_ACE-IT_computer/wetlands_and_coastal/todd/bureau_of_reclamation/FY21_Info/Yale_Project/YaleProject/"
-filename = "Metadata_File_for_runs.csv"
 
 
 def readfilename(filename):
@@ -35,20 +33,11 @@ def getenddate(filename,index):
 def filedimensions(filename):
     return filename.shape[0]
 
-readmetadatafile = readfilename(pathname + filename)
+
 
 def ReadElevationData(filename):
     return pd.read_csv(filename, index_col ="Date")
 
-
-
-
-'''
-file_dimensions = filedimensions(readmetadatafile)
-for i in range(file_dimensions):
-    print("The file name is: {}".format(readCSVfile(readmetadatafile,i)))
-    print(readCSVfile(readmetadatafile,i)) 
-'''
 
 #apply a rounding rule to the elevation data in each csv cell
 
@@ -129,6 +118,9 @@ def writeSimplePercentDifferenceCSV(filename, ListofList):
     out_file.close()
     
 # Main
+pathname = "/Users/rdel1cmc/Desktop/rdel1cmc/Desktop/Carra_ACE-IT_computer/wetlands_and_coastal/todd/bureau_of_reclamation/FY21_Info/Yale_Project/YaleProject/"
+filename = "Metadata_File_for_runs.csv"
+readmetadatafile = readfilename(pathname + filename)
 
 file_dimensions = filedimensions(readmetadatafile)
 for i in range(file_dimensions):
