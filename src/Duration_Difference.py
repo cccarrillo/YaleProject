@@ -24,7 +24,7 @@ def readfilename(filename):
     return pd.read_csv(filename)
 
 def readCSVfile(filename, index):
-    return filename.iloc[index,0]
+    return filename.iloc[index,0] #pulling out a row and a column 
 
 def getstartdate(filename,index):
     return filename.iloc[index,1]
@@ -134,11 +134,11 @@ file_dimensions = filedimensions(readmetadatafile)
 for i in range(file_dimensions):
     print("The file name is: {}".format(readCSVfile(readmetadatafile,i)))
     print(readCSVfile(readmetadatafile,i)) 
-    ElevationDataFrame = ReadElevationData(pathname + readCSVfile(readmetadatafile,0))
+    ElevationDataFrame = ReadElevationData(pathname + readCSVfile(readmetadatafile,i))
     print(ElevationDataFrame)
 
-    start_date = getstartdate(readmetadatafile,0)
-    end_date = getenddate(readmetadatafile,0)
+    start_date = getstartdate(readmetadatafile,i)
+    end_date = getenddate(readmetadatafile,i)
 #start_date = "1/1/97"
 #end_date = "1/1/98"
     ListOfList = drawdown_list(ElevationDataFrame, start_date, end_date)
