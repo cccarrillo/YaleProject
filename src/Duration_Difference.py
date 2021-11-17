@@ -13,10 +13,39 @@ Created on Thu Nov  4 09:15:13 2021
 #read in the .csv file
 
 import pandas as pd
+import collections
 
 
 def ReadElevationData(filename):
     return pd.read_csv(filename, index_col ="Date")
+
+
+pathname = "/Users/rdel1cmc/Desktop/rdel1cmc/Desktop/Carra_ACE-IT_computer/wetlands_and_coastal/todd/bureau_of_reclamation/FY21_Info/Yale_Project/"
+filename = "Metadata_File_for_runs.csv"
+
+
+def readfilename(filename):
+    return pd.read_csv(filename)
+
+def readCSVfile(filename, index):
+    return filename.iloc[index,0]
+
+def getstartdate(filename,index):
+    return filename.iloc[index,1]
+
+def getenddate(filename,index):
+    return filename.iloc[index,2]
+
+def filedimensions(filename):
+    return filename.shape[0]
+
+readmetadatafile = readfilename(pathname + filename)
+
+'''
+file_dimensions = filedimensions(readmetadatafile)
+for i in range(file_dimensions):
+    print(readCSVfile(readmetadatafile,i)) 
+'''
 
 #apply a rounding rule to the elevation data in each csv cell
 
@@ -49,9 +78,27 @@ def duration_check(list):
         return False
     else:
         return True
-        
+    
+def drawdown_frequency(frequency):
+    return (collections.Counter(frequency))
+
+def percent_drawdown_time(number):
+    return (number/365)
+
+def avg_drawdown_length(x,y):
+    return(x/y)
+
+def rate_of_change(duration, elevation):
+    return(elevation/duration)
+    
+
 def percent_difference(x,y):
     return (y-x)/x
+
+def sum_percent_difference(values):
+    return(sum(values))
+
+
 
 #repeat the loop until there is an increase in elevation.
 
@@ -81,9 +128,10 @@ def writeSimplePercentDifferenceCSV(filename, ListofList):
 # Main
 
 
-ElevationDataFrame = ReadElevationData("/Users/rdel1cmc/Desktop/rdel1cmc/Desktop/Carra_ACE-IT_computer/wetlands and coastal/todd/bureau of reclamation/FY21 Info/Yale Project/Negative_Elevation_csv/Silver_Jack_Reservoir_elevation_daily_without_missing.csv")
-start_date = str(input("What is the start date for this data frame (in format m/d/y): "))
-end_date = str(input("What is the end date for this data frame (in format m/d/y): "))
+ElevationDataFrame = ReadElevationData(pathname + readCSVfile(readmetadatafile,0))
+
+start_date = getstartdate(readmetadatafile,0)
+end_date = getenddate(readmetadatafile,0)
 #start_date = "1/1/97"
 #end_date = "1/1/98"
 ListOfList = drawdown_list(ElevationDataFrame, start_date, end_date)
