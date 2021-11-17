@@ -43,7 +43,7 @@ def ReadElevationData(filename):
 
 
 def rounding_off(number):
-    return round(number*2)/2
+    return round(number*5)/5
 
     
 #compare the elevation of each date and see if there is an increase or decrease (i.e., day 1 vs day 2; day 2 vs day 3)
@@ -134,7 +134,7 @@ for i in range(file_dimensions):
 #start_date = "1/1/97"
 #end_date = "1/1/98"
     ListOfList = drawdown_list(ElevationDataFrame, start_date, end_date)
-    writeSimplePercentDifferenceCSV("Trial_"+str(i)+".csv", ListOfList)
+    writeSimplePercentDifferenceCSV("Trial_0.2ft_"+str(i)+".csv", ListOfList)
 
 
 
