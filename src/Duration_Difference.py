@@ -95,7 +95,8 @@ def percent_difference(x,y):
 def sum_percent_difference(values):
     return(sum(values))
 
-
+def GetOnlyFilename(filename):
+    return os.path.basename(filename).split('.', 1)[0]
 
 #repeat the loop until there is an increase in elevation.
 
@@ -127,30 +128,27 @@ pathname = "/Users/rdel1cmc/Desktop/rdel1cmc/Desktop/Carra_ACE-IT_computer/wetla
 filename = "Metadata_File_for_runs.csv"
 readmetadatafile = readfilename(pathname + filename)
 
-def GetOnlyFilename(filename):
-    return os.path.basename(filename).split('.', 1)[0]
 
+'''
 filename = "path/to/something.csv"
 testing = GetOnlyFilename(filename)
 print(testing)
-
 '''
+
 file_dimensions = filedimensions(readmetadatafile)
-i=1
-for i in range(file_dimensions):
+
+for i in range(1):
     print("The file name is: {}".format(readCSVfile(readmetadatafile,i)))
     print(readCSVfile(readmetadatafile,i)) 
     ElevationDataFrame = ReadElevationData(pathname + readCSVfile(readmetadatafile,i))
     print(ElevationDataFrame)
-    print(os.path.splitext(readmetadatafile))
 
     start_date = getstartdate(readmetadatafile,i)
     end_date = getenddate(readmetadatafile,i)
-#start_date = "1/1/97"
-#end_date = "1/1/98"
+
     ListOfList = drawdown_list(ElevationDataFrame, start_date, end_date)
-    writeSimplePercentDifferenceCSV("Trial_" + "_Duration_" + 'csv', ListOfList)
-'''    
+    writeSimplePercentDifferenceCSV(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + "_Duration_" + '.csv', ListOfList)
+   
 
 
 
