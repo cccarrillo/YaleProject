@@ -18,7 +18,7 @@ import os
 
 
 
-'''
+
 def readfilename(filename):
     return pd.read_csv(filename)
 
@@ -126,9 +126,9 @@ def writeSimplePercentDifferenceCSV(filename, ListofList):
 pathname = "/Users/rdel1cmc/Desktop/rdel1cmc/Desktop/Carra_ACE-IT_computer/wetlands_and_coastal/todd/bureau_of_reclamation/FY21_Info/Yale_Project/YaleProject/"
 filename = "Metadata_File_for_runs.csv"
 readmetadatafile = readfilename(pathname + filename)
-'''
+
 def GetOnlyFilename(filename):
-    return os.path.splitext(filename)
+    return os.path.basename(filename).split('.', 1)[0]
 
 filename = "path/to/something.csv"
 testing = GetOnlyFilename(filename)
