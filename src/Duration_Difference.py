@@ -85,8 +85,12 @@ def percent_drawdown_time(number):
 def avg_drawdown_length(x,y):
     return(x/y)
 
-def rate_of_change(elevation, duration):
-    return(elevation/duration)
+def rate_of_change(list):
+    point1 = list[0]
+    point2 = list[-1]
+    length = len(list)
+    slope = (point2 - point1)/length
+    return slope
     
 
 def percent_difference(x,y):
