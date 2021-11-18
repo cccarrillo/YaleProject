@@ -14,6 +14,7 @@ Created on Thu Nov  4 09:15:13 2021
 
 import pandas as pd
 import collections
+import os
 
 
 
@@ -138,7 +139,9 @@ for i in range(file_dimensions):
 #start_date = "1/1/97"
 #end_date = "1/1/98"
     ListOfList = drawdown_list(ElevationDataFrame, start_date, end_date)
-    writeSimplePercentDifferenceCSV("Trial_ft_"+str(i)+".csv", ListOfList)
+    writeSimplePercentDifferenceCSV("".join(readCSVfile(readmetadatafile,i).split('.')[:-1]) + "_Duration_" + 'csv', ListOfList)
+    
+
 
 
 
