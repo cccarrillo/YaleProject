@@ -112,14 +112,12 @@ def drawdown_list(elev_data, start_date, end_date):
                 date2 = elev_data.index[start_index+index]
                 OutputList.append([date1,date2,len(list),list[0],list[len(list)-1], percent_difference(list[0],list[len(list)-1])])
             list = []
-        elif (len(list) >= 10)::
-            date1 = elev_data.index[start_index+index-len(list)+1]
-            date2 = elev_data.index[start_index+index]
+        elif (len(list) >= 10):
             if list[len(list)-1] - list[len(list)-5] == 0:
-                OutputList.append([date1,date2,len(list),list[0],list[len(list)-1], percent_difference(list[0],list[len(list)-1])])
-            else:
-                
-            list = []
+                date1 = elev_data.index[start_index+index-len(list)+1]
+                date2 = elev_data.index[start_index+index]
+                OutputList.append([date1,date2,len(list),list[0],list[len(list)-1], percent_difference(list[0],list[len(list)-1])])             
+                list = []
                 
                 
             
