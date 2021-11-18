@@ -18,7 +18,7 @@ import os
 
 
 
-
+'''
 def readfilename(filename):
     return pd.read_csv(filename)
 
@@ -126,14 +126,23 @@ def writeSimplePercentDifferenceCSV(filename, ListofList):
 pathname = "/Users/rdel1cmc/Desktop/rdel1cmc/Desktop/Carra_ACE-IT_computer/wetlands_and_coastal/todd/bureau_of_reclamation/FY21_Info/Yale_Project/YaleProject/"
 filename = "Metadata_File_for_runs.csv"
 readmetadatafile = readfilename(pathname + filename)
+'''
+def GetOnlyFilename(filename):
+    return os.path.splitext(filename)
 
+filename = "path/to/something.csv"
+testing = GetOnlyFilename(filename)
+print(testing)
+
+'''
 file_dimensions = filedimensions(readmetadatafile)
+i=1
 for i in range(file_dimensions):
     print("The file name is: {}".format(readCSVfile(readmetadatafile,i)))
     print(readCSVfile(readmetadatafile,i)) 
     ElevationDataFrame = ReadElevationData(pathname + readCSVfile(readmetadatafile,i))
     print(ElevationDataFrame)
-    print(os.path.splitext(ElevationDataFrame))
+    print(os.path.splitext(readmetadatafile))
 
     start_date = getstartdate(readmetadatafile,i)
     end_date = getenddate(readmetadatafile,i)
@@ -141,7 +150,7 @@ for i in range(file_dimensions):
 #end_date = "1/1/98"
     ListOfList = drawdown_list(ElevationDataFrame, start_date, end_date)
     writeSimplePercentDifferenceCSV("Trial_" + "_Duration_" + 'csv', ListOfList)
-    
+'''    
 
 
 
