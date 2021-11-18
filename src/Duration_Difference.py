@@ -85,7 +85,7 @@ def percent_drawdown_time(number):
 def avg_drawdown_length(x,y):
     return(x/y)
 
-def rate_of_change(duration, elevation):
+def rate_of_change(elevation, duration):
     return(elevation/duration)
     
 
@@ -110,13 +110,15 @@ def drawdown_list(elev_data, start_date, end_date):
             if(duration_check(list)):
                 date1 = elev_data.index[start_index+index-len(list)+1]
                 date2 = elev_data.index[start_index+index]
-                OutputList.append([date1,date2,len(list),list[0],list[len(list)-1], percent_difference(list[0],list[len(list)-1])])
+                slope = rate_of_change((list[len(list)-1]-list[0]), len(list))
+                OutputList.append([date1,date2,len(list),list[0],list[len(list)-1], percent_difference(list[0],list[len(list)-1]),slope])
             list = []
         elif (len(list) >= 10):
             if list[len(list)-1] - list[len(list)-5] == 0:
                 date1 = elev_data.index[start_index+index-len(list)+1]
                 date2 = elev_data.index[start_index+index]
-                OutputList.append([date1,date2,len(list),list[0],list[len(list)-1], percent_difference(list[0],list[len(list)-1])])             
+                slope = rate_of_change((list[len(list)-1]-list[0]), len(list))
+                OutputList.append([date1,date2,len(list),list[0],list[len(list)-1], percent_difference(list[0],list[len(list)-1]),slope])             
                 list = []
                 
                 
@@ -127,9 +129,9 @@ def drawdown_list(elev_data, start_date, end_date):
 
 def writeSimplePercentDifferenceCSV(filename, ListofList):
     out_file = open(filename, "w")
-    out_file.write("Start Date, End Date, Duration, Start Elevation, End Elevation, Percent Difference\n")
+    out_file.write("Start Date, End Date, Duration, Start Elevation, End Elevation, Percent Difference, Rate of Change\n")
     for i in range(len(ListofList)):
-        out_file.write(str(ListofList[i][0]) + "," + str(ListofList[i][1]) + "," + str(ListofList[i][2]) + "," + str(ListofList[i][3]) + "," + str(ListofList[i][4]) + "," + str(ListofList[i][5]) + "\n")
+        out_file.write(str(ListofList[i][0]) + "," + str(ListofList[i][1]) + "," + str(ListofList[i][2]) + "," + str(ListofList[i][3]) + "," + str(ListofList[i][4]) + "," + str(ListofList[i][5]) + "," + str(ListofList[i][6]) + "\n")
     out_file.close()
     
 # Main
@@ -138,11 +140,6 @@ filename = "Metadata_File_for_runs.csv"
 readmetadatafile = readfilename(pathname + filename)
 
 
-'''
-filename = "path/to/something.csv"
-testing = GetOnlyFilename(filename)
-print(testing)
-'''
 
 file_dimensions = filedimensions(readmetadatafile)
 
