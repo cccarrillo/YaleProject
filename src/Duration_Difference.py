@@ -119,6 +119,7 @@ def drawdown_list(elev_data, start_date, end_date):
                 OutputList.append([date1,date2,len(list),list[0],list[len(list)-1], percent_difference(list[0],list[len(list)-1])])
             else:
                 pass
+            list = []
                 
                 
             
