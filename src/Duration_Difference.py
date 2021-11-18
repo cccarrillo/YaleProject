@@ -90,7 +90,7 @@ def avg_drawdown_length(x,y):
 def rate_of_change(list):
     point1 = list[0]
     point2 = list[-1]
-    length = len(list)
+    length = len(list)-1
     slope = (point2 - point1)/length
     return slope
     
