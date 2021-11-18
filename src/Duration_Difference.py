@@ -133,13 +133,14 @@ for i in range(file_dimensions):
     print(readCSVfile(readmetadatafile,i)) 
     ElevationDataFrame = ReadElevationData(pathname + readCSVfile(readmetadatafile,i))
     print(ElevationDataFrame)
+    print(os.path.splitext(ElevationDataFrame))
 
     start_date = getstartdate(readmetadatafile,i)
     end_date = getenddate(readmetadatafile,i)
 #start_date = "1/1/97"
 #end_date = "1/1/98"
     ListOfList = drawdown_list(ElevationDataFrame, start_date, end_date)
-    writeSimplePercentDifferenceCSV("".join(readCSVfile(readmetadatafile,i).split('.')[:-1]) + "_Duration_" + 'csv', ListOfList)
+    writeSimplePercentDifferenceCSV("Trial_" + "_Duration_" + 'csv', ListOfList)
     
 
 
@@ -147,29 +148,6 @@ for i in range(file_dimensions):
 
 
 
-
-
-#testing
-
-'''
-def testing():
-    assert rounding_off(1.366) == 1.5
-    assert rounding_off(1.25) == 1.0
-    assert elev_decrease_equal(2,3) == False
-    assert elev_decrease_equal(3,2) == True
-    assert elev_decrease_equal(2,2) == True
-    assert percent_difference(1,5) == 4
-    list = []
-    drawdown_check(list, 3,2)
-    assert len(list) == 1
-    drawdown_check(list,2,1)
-    assert len(list) == 2
-    drawdown_check(list,1,2)
-    assert len(list) == 3
-    print("Everything passed")
-    
-testing()
-'''
 
 
 
