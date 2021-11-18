@@ -76,8 +76,10 @@ def duration_check(list):
     else:
         return True
     
-def drawdown_frequency(frequency):
-    return (collections.Counter(frequency))
+def drawdown_frequency(date):
+    date_df = pd.to_datetime(date,format= '%m/%d/%Y')
+    date_year = date_df.year
+    return date_year
 
 def percent_drawdown_time(number):
     return (number/365)
@@ -137,7 +139,7 @@ def writeSimplePercentDifferenceCSV(filename, ListofList):
     for i in range(len(ListofList)):
         out_file.write(str(ListofList[i][0]) + "," + str(ListofList[i][1]) + "," + str(ListofList[i][2]) + "," + str(ListofList[i][3]) + "," + str(ListofList[i][4]) + "," + str(ListofList[i][5]) + "," + str(ListofList[i][6]) + "\n")
     out_file.close()
-    
+'''    
 # Main
 pathname = "/Users/rdel1cmc/Desktop/rdel1cmc/Desktop/Carra_ACE-IT_computer/wetlands_and_coastal/todd/bureau_of_reclamation/FY21_Info/Yale_Project/YaleProject/"
 filename = "Metadata_File_for_runs.csv"
@@ -158,10 +160,12 @@ for i in range(1):
 
     ListOfList = drawdown_list(ElevationDataFrame, start_date, end_date)
     writeSimplePercentDifferenceCSV(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + "_Duration_" + '.csv', ListOfList)
-   
+ '''  
 
 
-
+date = str('1/1/1997')
+date = drawdown_frequency(date)
+print(date)
 
 
 
