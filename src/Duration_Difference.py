@@ -164,7 +164,7 @@ for i in range(1):
 
 
 date = str('1/1/1997')
-date = drawdown_frequency(date)
+date = get_year(date)
 print(date)
 
 
