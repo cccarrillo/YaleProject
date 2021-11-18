@@ -76,7 +76,7 @@ def duration_check(list):
     else:
         return True
     
-def drawdown_frequency(date):
+def get_year(date):
     date_df = pd.to_datetime(date,format= '%m/%d/%Y')
     date_year = date_df.year
     return date_year
