@@ -87,19 +87,13 @@ def list_frequency(lists):
 def yearly_percent_drawdown(list):
     durations = []
     for i in range(len(list)):
-        duration = list[i][2]
-        durations.append(duration)
-        duration = 0
-    print(durations)
+        durations.append(list[i][2])
     return sum(durations)/365
 
 def avg_drawdown_length(list):
     durations = []
     for i in range(len(list)):
-        duration = list[i][2]
-        durations.append(duration)
-        duration = 0
-    print(durations)
+        durations.append(list[i][2])
     return sum(durations)/len(durations)
 
 def rate_of_change(list):
