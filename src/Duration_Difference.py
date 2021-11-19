@@ -132,15 +132,12 @@ def drawdown_list(elev_data, start_date, end_date):
     return (OutputList)
 
 
-def MetricsList(filename):
-    output_metrics_list = []
-    start_dates = ListOfList[i][0]
-    duration_length = ListOfList[i][2]
-    for index in range(start_dates):
-        start_year = get_year(start_dates)
-    output_metrics_list.append([start_dates, duration_length, start_year])
-    output_metrics_list = []
-    return output_metrics_list
+def MetricsList(lists):
+    mydict = {}
+    mylist = []
+    for i in list(len(mylist)):
+        mydict.append(mylist)
+    return mydict
     
     
 
@@ -152,15 +149,16 @@ def writeSimplePercentDifferenceCSV(filename, ListofList):
     for i in range(len(ListofList)):
         out_file.write(str(ListofList[i][0]) + "," + str(ListofList[i][1]) + "," + str(ListofList[i][2]) + "," + str(ListofList[i][3]) + "," + str(ListofList[i][4]) + "," + str(ListofList[i][5]) + "," + str(ListofList[i][6]) + "\n")
     out_file.close()
-
+    
+'''
 def MetricsCSV(filename, ListofList):
     out_file = open(filename, "w")
     out_file.write("Start Date, Duration, Year\n")
     for i in range(len(output_metrics_list)):
         out_file.write(str(ListofList[i][0]) + "," + str(ListofList[i][2]) + "," + str(output_metrics_list[i][2]) + "\n")
     out_file.close()
-
-
+'''
+'''
 # Main
 pathname = "/Users/rdel1cmc/Desktop/rdel1cmc/Desktop/Carra_ACE-IT_computer/wetlands_and_coastal/todd/bureau_of_reclamation/FY21_Info/Yale_Project/YaleProject/"
 filename = "Metadata_File_for_runs.csv"
@@ -184,10 +182,12 @@ for i in range(1):
     output_metrics_list = MetricsList(ElevationDataFrame)
     MetricsCSV(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + "_Metrics_" + '.csv', output_metrics_list)
 
-
-date = str('1/1/1997')
-date = get_year(date)
-print(date)
+'''
+mydictionary = {}
+mydictionary["2019"] = [2]
+additional = [3]
+mydictionary["2019"].append(additional)
+print(mydictionary)
 
 
 
