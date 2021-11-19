@@ -165,8 +165,8 @@ def writeSimplePercentDifferenceCSV(filename, ListofList):
 
 def write_yearly_metrics_csv(filename, dictionary):
     out_file = open(filename, "w")
-    out_file.write("Length of dictionary\n")
-    out_file.write(str(len(dictionary)))
+    out_file.write("Dictionary Keys\n")
+    out_file.write(str(dictionary.keys()) + "," + "\n")
     out_file.close()
     
     
@@ -198,8 +198,7 @@ for i in range(1):
     ListOfList = drawdown_list(ElevationDataFrame, start_date, end_date)
     #writeSimplePercentDifferenceCSV(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + "_Duration_" + '.csv', ListOfList)
     data_yearly_dict = MetricsList(ListOfList)
-    metrics_csv = write_yearly_metrics_csv("Metrics_Trial" + '.csv', data_yearly_dict)
-    print(metrics_csv)
+    write_yearly_metrics_csv("Metrics_Trial" + '.csv', data_yearly_dict)
     listfrequency = list_frequency(data_yearly_dict[2020])
     #print(listfrequency)
     yearlydrawdown = yearly_percent_drawdown(data_yearly_dict[2020])
