@@ -142,8 +142,7 @@ def MetricsList(lists):
     return mydict
 
 def list_frequency(lists):
-    mylist = lists
-    return len(mylist)
+    return len(lists)
     
     
 
@@ -186,7 +185,7 @@ for i in range(1):
     ListOfList = drawdown_list(ElevationDataFrame, start_date, end_date)
     #writeSimplePercentDifferenceCSV(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + "_Duration_" + '.csv', ListOfList)
     output_metrics_list = MetricsList(ListOfList)
-    print(output_metrics_list)
+    
     listfrequency = list_frequency(ListOfList)
     print(listfrequency)
     #MetricsCSV(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + "_Metrics_" + '.csv', output_metrics_list)
