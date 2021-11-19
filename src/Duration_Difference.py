@@ -134,9 +134,11 @@ def drawdown_list(elev_data, start_date, end_date):
 
 def MetricsList(lists):
     mydict = {}
-    mylist = []
-    for i in list(len(mylist)):
-        mydict.append(mylist)
+    for i in range(len(lists)):
+        if (mydict.__contains__((get_year(lists[i][0])))):
+            mydict[get_year(lists[i][0])].append(lists[i])
+        else:
+            mydict[get_year(lists[i][0])] = [lists[i]]
     return mydict
     
     
@@ -158,7 +160,7 @@ def MetricsCSV(filename, ListofList):
         out_file.write(str(ListofList[i][0]) + "," + str(ListofList[i][2]) + "," + str(output_metrics_list[i][2]) + "\n")
     out_file.close()
 '''
-'''
+
 # Main
 pathname = "/Users/rdel1cmc/Desktop/rdel1cmc/Desktop/Carra_ACE-IT_computer/wetlands_and_coastal/todd/bureau_of_reclamation/FY21_Info/Yale_Project/YaleProject/"
 filename = "Metadata_File_for_runs.csv"
@@ -178,9 +180,10 @@ for i in range(1):
     end_date = getenddate(readmetadatafile,i)
 
     ListOfList = drawdown_list(ElevationDataFrame, start_date, end_date)
-    writeSimplePercentDifferenceCSV(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + "_Duration_" + '.csv', ListOfList)
-    output_metrics_list = MetricsList(ElevationDataFrame)
-    MetricsCSV(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + "_Metrics_" + '.csv', output_metrics_list)
+    #writeSimplePercentDifferenceCSV(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + "_Duration_" + '.csv', ListOfList)
+    output_metrics_list = MetricsList(ListOfList)
+    print(output_metrics_list)
+    #MetricsCSV(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + "_Metrics_" + '.csv', output_metrics_list)
 
 '''
 mydictionary = {}
@@ -197,9 +200,11 @@ my_newdictionary = {}
 
 print(get_year(mylist[0][0]))
 
-if (my_newdictionary.has_key((get_year(mylist[0][0])))):
-    my_newdictionary[get_year(mylist[0][0])].append(mylist[0][1])
-else:
-    my_newdictionary[get_year(mylist[0][0])] = [mylist[0][1]]
-print(my_newdictionary)
 
+for i in range(len(mylist)):
+    if (my_newdictionary.__contains__((get_year(mylist[i][0])))):
+        my_newdictionary[get_year(mylist[i][0])].append(mylist[i])
+    else:
+        my_newdictionary[get_year(mylist[i][0])] = [mylist[i]]
+print(my_newdictionary)
+'''
