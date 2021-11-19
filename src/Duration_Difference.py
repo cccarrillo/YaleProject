@@ -163,12 +163,13 @@ def writeSimplePercentDifferenceCSV(filename, ListofList):
     
 
 def write_yearly_metrics_csv(filename, list):
-    listfrequency = list_frequency(data_yearly_dict[2020])
-    yearlydrawdown = yearly_percent_drawdown(data_yearly_dict[2020])
-    averagedrawdown = avg_drawdown_length(data_yearly_dict[2020])
+    
     out_file = open(filename, "w")
     out_file.write("Dictionary Keys, Frequency, Yearly Drawdown, Average Drawdown\n")
     for key in list:
+        listfrequency = list_frequency(data_yearly_dict[key])
+        yearlydrawdown = yearly_percent_drawdown(data_yearly_dict[key])
+        averagedrawdown = avg_drawdown_length(data_yearly_dict[key])
         out_file.write(str(key) + "," + str(listfrequency) + "," + str(yearlydrawdown) + "," + str(averagedrawdown) + "\n")
     out_file.close()
     
