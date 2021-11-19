@@ -140,6 +140,10 @@ def MetricsList(lists):
         else:
             mydict[get_year(lists[i][0])] = [lists[i]]
     return mydict
+
+def list_frequency(lists):
+    mylist = MetricsList(lists)
+    return len(mylist)
     
     
 
@@ -183,28 +187,7 @@ for i in range(1):
     #writeSimplePercentDifferenceCSV(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + "_Duration_" + '.csv', ListOfList)
     output_metrics_list = MetricsList(ListOfList)
     print(output_metrics_list)
+    listfrequency = list_frequency(ListOfList)
+    print(listfrequency)
     #MetricsCSV(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + "_Metrics_" + '.csv', output_metrics_list)
 
-'''
-mydictionary = {}
-mydictionary["2019"] = [2]
-additional = 3
-mydictionary["2019"].append(additional)
-mydictionary["2020"] = [1,5]
-mydictionary["2020"].append(10)
-print(len(mydictionary["2020"]))
-
-
-mylist = [["1/1/97",2], ["1/5/97",3],["1/1/98",4]]
-my_newdictionary = {}
-
-print(get_year(mylist[0][0]))
-
-
-for i in range(len(mylist)):
-    if (my_newdictionary.__contains__((get_year(mylist[i][0])))):
-        my_newdictionary[get_year(mylist[i][0])].append(mylist[i])
-    else:
-        my_newdictionary[get_year(mylist[i][0])] = [mylist[i]]
-print(my_newdictionary)
-'''
