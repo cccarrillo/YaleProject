@@ -13,7 +13,6 @@ Created on Thu Nov  4 09:15:13 2021
 #read in the .csv file
 
 import pandas as pd
-import collections
 import os
 
 
@@ -164,20 +163,15 @@ def writeSimplePercentDifferenceCSV(filename, ListofList):
     
 
 def write_yearly_metrics_csv(filename, dictionary):
+    listfrequency = list_frequency(data_yearly_dict)
+    yearlydrawdown = yearly_percent_drawdown(data_yearly_dict)
+    averagedrawdown = avg_drawdown_length(data_yearly_dict)
     out_file = open(filename, "w")
-    out_file.write("Dictionary Keys\n")
+    out_file.write("Dictionary Keys, Frequency, Yearly Drawdown, Average Drawdown\n")
     for key in dictionary:
-        out_file.write(str(key) + "," + "\n")
+        out_file.write(str(key) + "," + str(listfrequency) + "," + str(yearlydrawdown) + "," + str(averagedrawdown) + "\n")
     out_file.close()
     
-    
-    '''
-    out_file = open(filename, "w")
-    out_file.write("Start Date, Duration, Year\n")
-    for i in range(len(output_metrics_list)):
-        out_file.write(str(ListofList[i][0]) + "," + str(ListofList[i][2]) + "," + str(output_metrics_list[i][2]) + "\n")
-    out_file.close()
-    '''
 
 # Main
 pathname = "/Users/rdel1cmc/Desktop/rdel1cmc/Desktop/Carra_ACE-IT_computer/wetlands_and_coastal/todd/bureau_of_reclamation/FY21_Info/Yale_Project/YaleProject/"
@@ -200,11 +194,6 @@ for i in range(1):
     #writeSimplePercentDifferenceCSV(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + "_Duration_" + '.csv', ListOfList)
     data_yearly_dict = MetricsList(ListOfList)
     write_yearly_metrics_csv("Metrics_Trial" + '.csv', data_yearly_dict)
-    listfrequency = list_frequency(data_yearly_dict[2020])
-    #print(listfrequency)
-    yearlydrawdown = yearly_percent_drawdown(data_yearly_dict[2020])
-    #print(yearlydrawdown)
-    averagedrawdown = avg_drawdown_length(data_yearly_dict[2020])
-    #print(averagedrawdown)
+    
 
 
