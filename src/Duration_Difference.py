@@ -53,8 +53,6 @@ def elev_decrease(number1,number2):
     
     
 def elev_decrease_equal(number1, number2):
-    #number1 = rounding_off(number1)
-    #number2 = rounding_off(number2)
     return (number2 <= number1)
     
 #if Day X is less or equal to Day Y, then that is included in the drawdown period.
@@ -120,7 +118,10 @@ def drawdown_list(elev_data, start_date, end_date):
     OutputList = []
     list = []
     for index in range(end_index-start_index):
-        if (not drawdown_check(list,elev_data.iloc[start_index+index,0], elev_data.iloc[start_index+index+1,0])):
+        if (len(list)==0):
+            if (elev_decrease(elev_data.iloc[start_index+index,0], elev_data.iloc[start_index+index+1,0])):
+                list.append(elev_data.iloc[start_index+index,0])
+        elif (not drawdown_check(list,elev_data.iloc[start_index+index,0], elev_data.iloc[start_index+index+1,0])):
             if(duration_check(list)):
                 date1 = elev_data.index[start_index+index-len(list)+1]
                 date2 = elev_data.index[start_index+index]
