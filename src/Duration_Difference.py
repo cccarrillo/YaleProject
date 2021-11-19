@@ -166,7 +166,8 @@ def writeSimplePercentDifferenceCSV(filename, ListofList):
 def write_yearly_metrics_csv(filename, dictionary):
     out_file = open(filename, "w")
     out_file.write("Dictionary Keys\n")
-    out_file.write(str(dictionary.keys()) + "," + "\n")
+    for key in dictionary:
+        out_file.write(str(key) + "," + "\n")
     out_file.close()
     
     
