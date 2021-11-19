@@ -184,9 +184,9 @@ for i in range(1):
 
     ListOfList = drawdown_list(ElevationDataFrame, start_date, end_date)
     #writeSimplePercentDifferenceCSV(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + "_Duration_" + '.csv', ListOfList)
-    output_metrics_list = MetricsList(ListOfList)
+    data_yearly_dict = MetricsList(ListOfList)
     
-    listfrequency = list_frequency(ListOfList)
+    listfrequency = list_frequency(data_yearly_dict['2020'])
     print(listfrequency)
     #MetricsCSV(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + "_Metrics_" + '.csv', output_metrics_list)
 
