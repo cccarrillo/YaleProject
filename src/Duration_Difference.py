@@ -162,14 +162,18 @@ def writeSimplePercentDifferenceCSV(filename, ListofList):
         out_file.write(str(ListofList[i][0]) + "," + str(ListofList[i][1]) + "," + str(ListofList[i][2]) + "," + str(ListofList[i][3]) + "," + str(ListofList[i][4]) + "," + str(ListofList[i][5]) + "," + str(ListofList[i][6]) + "\n")
     out_file.close()
     
-'''
-def MetricsCSV(filename, ListofList):
+
+def write_yearly_metrics_csv(dictionary):
+    return len(MetricsList(dictionary))
+    
+    
+    '''
     out_file = open(filename, "w")
     out_file.write("Start Date, Duration, Year\n")
     for i in range(len(output_metrics_list)):
         out_file.write(str(ListofList[i][0]) + "," + str(ListofList[i][2]) + "," + str(output_metrics_list[i][2]) + "\n")
     out_file.close()
-'''
+    '''
 
 # Main
 pathname = "/Users/rdel1cmc/Desktop/rdel1cmc/Desktop/Carra_ACE-IT_computer/wetlands_and_coastal/todd/bureau_of_reclamation/FY21_Info/Yale_Project/YaleProject/"
@@ -192,12 +196,13 @@ for i in range(1):
     ListOfList = drawdown_list(ElevationDataFrame, start_date, end_date)
     #writeSimplePercentDifferenceCSV(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + "_Duration_" + '.csv', ListOfList)
     data_yearly_dict = MetricsList(ListOfList)
-    
+    metrics_csv = write_yearly_metrics_csv(ListOfList)
+    print(metrics_csv)
     listfrequency = list_frequency(data_yearly_dict[2020])
-    print(listfrequency)
+    #print(listfrequency)
     yearlydrawdown = yearly_percent_drawdown(data_yearly_dict[2020])
-    print(yearlydrawdown)
+    #print(yearlydrawdown)
     averagedrawdown = avg_drawdown_length(data_yearly_dict[2020])
-    print(averagedrawdown)
+    #print(averagedrawdown)
     #MetricsCSV(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + "_Metrics_" + '.csv', output_metrics_list)
 
