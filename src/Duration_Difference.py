@@ -90,6 +90,7 @@ def yearly_percent_drawdown(list):
         duration = list[i][2]
         durations.append(duration)
         duration = 0
+    print(durations)
     return sum(durations)/365
 
 def avg_drawdown_length(x,y):
@@ -192,7 +193,7 @@ for i in range(1):
     #writeSimplePercentDifferenceCSV(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + "_Duration_" + '.csv', ListOfList)
     data_yearly_dict = MetricsList(ListOfList)
     
-    listfrequency = list_frequency(data_yearly_dict)
+    listfrequency = list_frequency(data_yearly_dict[2020])
     print(listfrequency)
     yearlydrawdown = yearly_percent_drawdown(data_yearly_dict[2020])
     print(yearlydrawdown)
