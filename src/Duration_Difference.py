@@ -142,7 +142,7 @@ def MetricsList(lists):
     return mydict
 
 def list_frequency(lists):
-    mylist = MetricsList(lists)
+    mylist = lists
     return len(mylist)
     
     
