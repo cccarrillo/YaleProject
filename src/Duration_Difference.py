@@ -48,6 +48,8 @@ def rounding_off(number):
     
 #compare the elevation of each date and see if there is an increase or decrease (i.e., day 1 vs day 2; day 2 vs day 3)
 def elev_decrease(number1,number2):
+    number1 = rounding_off(number1)
+    number2 = rounding_off(number2)
     return(number2 < number1)
     
     
@@ -104,9 +106,6 @@ def rate_of_change(list):
 def percent_difference(x,y):
     return (y-x)/x
 
-def sum_percent_difference(values):
-    return(sum(values))
-
 def GetOnlyFilename(filename):
     return os.path.basename(filename).split('.', 1)[0]
 
@@ -120,7 +119,7 @@ def drawdown_list(elev_data, start_date, end_date):
     for index in range(end_index-start_index):
         if (len(list)==0):
             if (elev_decrease(elev_data.iloc[start_index+index,0], elev_data.iloc[start_index+index+1,0])):
-                list.append(elev_data.iloc[start_index+index,0])
+                list.append(rounding_off(elev_data.iloc[start_index+index,0]))
         elif (not drawdown_check(list,elev_data.iloc[start_index+index,0], elev_data.iloc[start_index+index+1,0])):
             if(duration_check(list)):
                 date1 = elev_data.index[start_index+index-len(list)+1]
@@ -166,7 +165,7 @@ def writeSimplePercentDifferenceCSV(filename, ListofList):
 def write_yearly_metrics_csv(filename, list):
     
     out_file = open(filename, "w")
-    out_file.write("Year, Frequency, Yearly Drawdown, Average Drawdown\n")
+    out_file.write("Year, Number of Drawdowns, Percent of Year in Drawdown, Average Drawdown\n")
     for key in list:
         listfrequency = list_frequency(data_yearly_dict[key])
         yearlydrawdown = yearly_percent_drawdown(data_yearly_dict[key])
