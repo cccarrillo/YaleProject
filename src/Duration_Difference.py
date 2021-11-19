@@ -163,8 +163,11 @@ def writeSimplePercentDifferenceCSV(filename, ListofList):
     out_file.close()
     
 
-def write_yearly_metrics_csv(dictionary):
-    return len(MetricsList(dictionary))
+def write_yearly_metrics_csv(filename, dictionary):
+    out_file = open(filename, "w")
+    out_file.write("Length of dictionary\n")
+    out_file.write(str(len(dictionary)))
+    out_file.close()
     
     
     '''
@@ -186,7 +189,6 @@ file_dimensions = filedimensions(readmetadatafile)
 
 for i in range(1):
     print("The file name is: {}".format(readCSVfile(readmetadatafile,i)))
-    print(readCSVfile(readmetadatafile,i)) 
     ElevationDataFrame = ReadElevationData(pathname + readCSVfile(readmetadatafile,i))
     print(ElevationDataFrame)
 
@@ -196,7 +198,7 @@ for i in range(1):
     ListOfList = drawdown_list(ElevationDataFrame, start_date, end_date)
     #writeSimplePercentDifferenceCSV(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + "_Duration_" + '.csv', ListOfList)
     data_yearly_dict = MetricsList(ListOfList)
-    metrics_csv = write_yearly_metrics_csv(ListOfList)
+    metrics_csv = write_yearly_metrics_csv("Metrics_Trial" + '.csv', data_yearly_dict)
     print(metrics_csv)
     listfrequency = list_frequency(data_yearly_dict[2020])
     #print(listfrequency)
@@ -204,5 +206,5 @@ for i in range(1):
     #print(yearlydrawdown)
     averagedrawdown = avg_drawdown_length(data_yearly_dict[2020])
     #print(averagedrawdown)
-    #MetricsCSV(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + "_Metrics_" + '.csv', output_metrics_list)
+
 
