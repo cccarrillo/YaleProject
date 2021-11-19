@@ -43,7 +43,7 @@ def ReadElevationData(filename):
 
 
 def rounding_off(number):
-    return round(number*5)/5
+    return round(number*1)/1
 
     
 #compare the elevation of each date and see if there is an increase or decrease (i.e., day 1 vs day 2; day 2 vs day 3)
@@ -183,18 +183,17 @@ readmetadatafile = readfilename(pathname + filename)
 
 file_dimensions = filedimensions(readmetadatafile)
 
-for i in range(1):
+for i in range(file_dimensions):
     print("The file name is: {}".format(readCSVfile(readmetadatafile,i)))
     ElevationDataFrame = ReadElevationData(pathname + readCSVfile(readmetadatafile,i))
-    print(ElevationDataFrame)
 
     start_date = getstartdate(readmetadatafile,i)
     end_date = getenddate(readmetadatafile,i)
 
     ListOfList = drawdown_list(ElevationDataFrame, start_date, end_date)
-    writeSimplePercentDifferenceCSV(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + "_Duration_" + '.csv', ListOfList)
+    writeSimplePercentDifferenceCSV(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + "_Duration_1FT_" + '.csv', ListOfList)
     data_yearly_dict = MetricsList(ListOfList)
-    write_yearly_metrics_csv(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + "_Metrics_" + '.csv', data_yearly_dict)
+    write_yearly_metrics_csv(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + "_Metrics_1FT_" + '.csv', data_yearly_dict)
     
 
 
