@@ -187,11 +187,19 @@ mydictionary = {}
 mydictionary["2019"] = [2]
 additional = 3
 mydictionary["2019"].append(additional)
-print(mydictionary)
+mydictionary["2020"] = [1,5]
+mydictionary["2020"].append(10)
+print(len(mydictionary["2020"]))
 
 
+mylist = [["1/1/97",2], ["1/5/97",3],["1/1/98",4]]
+my_newdictionary = {}
 
+print(get_year(mylist[0][0]))
 
-
-
+if (my_newdictionary.has_key((get_year(mylist[0][0])))):
+    my_newdictionary[get_year(mylist[0][0])].append(mylist[0][1])
+else:
+    my_newdictionary[get_year(mylist[0][0])] = [mylist[0][1]]
+print(my_newdictionary)
 
