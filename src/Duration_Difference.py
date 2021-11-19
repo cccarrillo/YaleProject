@@ -93,8 +93,14 @@ def yearly_percent_drawdown(list):
     print(durations)
     return sum(durations)/365
 
-def avg_drawdown_length(x,y):
-    return(x/y)
+def avg_drawdown_length(list):
+    durations = []
+    for i in range(len(list)):
+        duration = list[i][2]
+        durations.append(duration)
+        duration = 0
+    print(durations)
+    return sum(durations)/len(durations)
 
 def rate_of_change(list):
     point1 = list[0]
@@ -197,5 +203,7 @@ for i in range(1):
     print(listfrequency)
     yearlydrawdown = yearly_percent_drawdown(data_yearly_dict[2020])
     print(yearlydrawdown)
+    averagedrawdown = avg_drawdown_length(data_yearly_dict[2020])
+    print(averagedrawdown)
     #MetricsCSV(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + "_Metrics_" + '.csv', output_metrics_list)
 
