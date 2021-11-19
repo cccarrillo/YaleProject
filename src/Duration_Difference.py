@@ -185,7 +185,7 @@ for i in range(1):
 '''
 mydictionary = {}
 mydictionary["2019"] = [2]
-additional = [3]
+additional = 3
 mydictionary["2019"].append(additional)
 print(mydictionary)
 
