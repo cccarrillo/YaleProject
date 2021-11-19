@@ -77,7 +77,7 @@ def duration_check(list):
         return True
     
 def get_year(date):
-    date_df = pd.to_datetime(date,format= '%m/%d/%Y')
+    date_df = pd.to_datetime(date,format= '%m/%d/%y')
     date_year = date_df.year
     return date_year
 
@@ -131,6 +131,19 @@ def drawdown_list(elev_data, start_date, end_date):
             
     return (OutputList)
 
+
+def MetricsList(filename):
+    output_metrics_list = []
+    start_dates = ListOfList[i][0]
+    duration_length = ListOfList[i][2]
+    for index in range(start_dates):
+        start_year = get_year(start_dates)
+    output_metrics_list.append([start_dates, duration_length, start_year])
+    output_metrics_list = []
+    return output_metrics_list
+    
+    
+
 #output a .csv or .xlsx file that will spit out the start date, end date, start elevation, end elevation, percent difference of that duration
 
 def writeSimplePercentDifferenceCSV(filename, ListofList):
@@ -139,7 +152,15 @@ def writeSimplePercentDifferenceCSV(filename, ListofList):
     for i in range(len(ListofList)):
         out_file.write(str(ListofList[i][0]) + "," + str(ListofList[i][1]) + "," + str(ListofList[i][2]) + "," + str(ListofList[i][3]) + "," + str(ListofList[i][4]) + "," + str(ListofList[i][5]) + "," + str(ListofList[i][6]) + "\n")
     out_file.close()
-'''    
+
+def MetricsCSV(filename, ListofList):
+    out_file = open(filename, "w")
+    out_file.write("Start Date, Duration, Year\n")
+    for i in range(len(output_metrics_list)):
+        out_file.write(str(ListofList[i][0]) + "," + str(ListofList[i][2]) + "," + str(output_metrics_list[i][2]) + "\n")
+    out_file.close()
+
+
 # Main
 pathname = "/Users/rdel1cmc/Desktop/rdel1cmc/Desktop/Carra_ACE-IT_computer/wetlands_and_coastal/todd/bureau_of_reclamation/FY21_Info/Yale_Project/YaleProject/"
 filename = "Metadata_File_for_runs.csv"
@@ -160,7 +181,8 @@ for i in range(1):
 
     ListOfList = drawdown_list(ElevationDataFrame, start_date, end_date)
     writeSimplePercentDifferenceCSV(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + "_Duration_" + '.csv', ListOfList)
- '''  
+    output_metrics_list = MetricsList(ElevationDataFrame)
+    MetricsCSV(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + "_Metrics_" + '.csv', output_metrics_list)
 
 
 date = str('1/1/1997')
