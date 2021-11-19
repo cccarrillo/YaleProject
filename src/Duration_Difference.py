@@ -81,8 +81,16 @@ def get_year(date):
     date_year = date_df.year
     return date_year
 
-def percent_drawdown_time(number):
-    return (number/365)
+def list_frequency(lists):
+    return len(lists)
+    
+def yearly_percent_drawdown(list):
+    durations = []
+    for i in range(len(list)):
+        duration = list[i][2]
+        durations.append(duration)
+        duration = 0
+    return sum(durations)/365
 
 def avg_drawdown_length(x,y):
     return(x/y)
@@ -141,9 +149,7 @@ def MetricsList(lists):
             mydict[get_year(lists[i][0])] = [lists[i]]
     return mydict
 
-def list_frequency(lists):
-    return len(lists)
-    
+
     
 
 #output a .csv or .xlsx file that will spit out the start date, end date, start elevation, end elevation, percent difference of that duration
@@ -186,7 +192,9 @@ for i in range(1):
     #writeSimplePercentDifferenceCSV(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + "_Duration_" + '.csv', ListOfList)
     data_yearly_dict = MetricsList(ListOfList)
     
-    listfrequency = list_frequency(data_yearly_dict[2020])
+    listfrequency = list_frequency(data_yearly_dict)
     print(listfrequency)
+    yearlydrawdown = yearly_percent_drawdown(data_yearly_dict[2020])
+    print(yearlydrawdown)
     #MetricsCSV(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + "_Metrics_" + '.csv', output_metrics_list)
 
