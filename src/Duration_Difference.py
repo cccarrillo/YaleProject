@@ -14,7 +14,7 @@ Created on Thu Nov  4 09:15:13 2021
 
 import pandas as pd
 import os
-
+import numpy as np
 
 
 
@@ -115,10 +115,7 @@ def rate_of_change(list):
     return slope
 
 def drawdown_standard_deviation(list):
-    deviation = []
-    for i in range(len(list)):
-        deviation.append(list[i][2])
-    return deviation.std()
+    return np.std(list)
     
 
 
@@ -194,7 +191,7 @@ def write_yearly_metrics_csv(filename, list):
         out_file.write(str(key) + "," + str(listfrequency) + "," + str(yearlydrawdown) + "," + str(averagedrawdown) + "," + str(averagepercent) + "," + str(averageslope) + "\n")
     out_file.close()
     
-
+'''
 # Main
 pathname = "/Users/rdel1cmc/Desktop/rdel1cmc/Desktop/Carra_ACE-IT_computer/wetlands_and_coastal/todd/bureau_of_reclamation/FY21_Info/Yale_Project/YaleProject/"
 filename = "Metadata_File_for_runs.csv"
@@ -215,6 +212,9 @@ for i in range(1):
     writeSimplePercentDifferenceCSV(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + "_Duration_1FT_" + '.csv', ListOfList)
     data_yearly_dict = MetricsList(ListOfList)
     write_yearly_metrics_csv(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + "_Metrics_1FT_" + '.csv', data_yearly_dict)
-    
+'''    
 
+SD_List = [6,2,3,1]
+Test = drawdown_standard_deviation(SD_List)
+print(Test)
 
