@@ -43,7 +43,7 @@ def ReadElevationData(filename):
 
 
 def rounding_off(number):
-    return round(number*1)/1
+    return round(number*5)/5
 
     
 #compare the elevation of each date and see if there is an increase or decrease (i.e., day 1 vs day 2; day 2 vs day 3)
@@ -115,7 +115,22 @@ def rate_of_change(list):
     return slope
 
 def drawdown_standard_deviation(list):
-    return np.std(list)
+    duration = []
+    for i in range(len(list)):
+        duration.append(list[i][2])
+    return np.std(duration)
+
+def percent_standard_deviation(list):
+    difference = []
+    for i in range(len(list)):
+        difference.append(list[i][5])
+    return np.std(difference)
+
+def slope_standard_deviation(list):
+    slope = []
+    for i in range(len(list)):
+        slope.append(list[i][6])
+    return np.std(slope)
     
 
 
@@ -181,17 +196,20 @@ def writeSimplePercentDifferenceCSV(filename, ListofList):
 def write_yearly_metrics_csv(filename, list):
     
     out_file = open(filename, "w")
-    out_file.write("Year, Number of Drawdowns, Percent of Year in Drawdown, Average Days of Drawdown, Average Percent Difference, Average Rate of Change\n")
+    out_file.write("Year, Number of Drawdowns, Percent of Year in Drawdown, Average Days of Drawdown, SD of Drawdown, Average Percent Difference, SD Percent Difference, Average Rate of Change, SD Rate of Change\n")
     for key in list:
         listfrequency = list_frequency(data_yearly_dict[key])
         yearlydrawdown = yearly_percent_drawdown(data_yearly_dict[key])
         averagedrawdown = avg_drawdown_length(data_yearly_dict[key])
+        SDdrawdown = drawdown_standard_deviation(data_yearly_dict[key])
         averagepercent = avg_percent_difference(data_yearly_dict[key])
+        SDpercent = percent_standard_deviation(data_yearly_dict[key])
         averageslope = avg_slope(data_yearly_dict[key])
-        out_file.write(str(key) + "," + str(listfrequency) + "," + str(yearlydrawdown) + "," + str(averagedrawdown) + "," + str(averagepercent) + "," + str(averageslope) + "\n")
+        SDslope = slope_standard_deviation(data_yearly_dict[key])
+        out_file.write(str(key) + "," + str(listfrequency) + "," + str(yearlydrawdown) + "," + str(averagedrawdown) + "," + str(SDdrawdown) + "," + str(averagepercent) + "," + str(SDpercent) + "," + str(averageslope) + "," + str(SDslope) + "\n")
     out_file.close()
     
-'''
+
 # Main
 pathname = "/Users/rdel1cmc/Desktop/rdel1cmc/Desktop/Carra_ACE-IT_computer/wetlands_and_coastal/todd/bureau_of_reclamation/FY21_Info/Yale_Project/YaleProject/"
 filename = "Metadata_File_for_runs.csv"
@@ -201,7 +219,7 @@ readmetadatafile = readfilename(pathname + filename)
 
 file_dimensions = filedimensions(readmetadatafile)
 
-for i in range(1):
+for i in range(file_dimensions):
     print("The file name is: {}".format(readCSVfile(readmetadatafile,i)))
     ElevationDataFrame = ReadElevationData(pathname + readCSVfile(readmetadatafile,i))
 
@@ -209,12 +227,7 @@ for i in range(1):
     end_date = getenddate(readmetadatafile,i)
 
     ListOfList = drawdown_list(ElevationDataFrame, start_date, end_date)
-    writeSimplePercentDifferenceCSV(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + "_Duration_1FT_" + '.csv', ListOfList)
+    writeSimplePercentDifferenceCSV(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + "_Duration_0.2FT_" + '.csv', ListOfList)
     data_yearly_dict = MetricsList(ListOfList)
-    write_yearly_metrics_csv(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + "_Metrics_1FT_" + '.csv', data_yearly_dict)
-'''    
-
-SD_List = [6,2,3,1]
-Test = drawdown_standard_deviation(SD_List)
-print(Test)
+    write_yearly_metrics_csv(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + "_Metrics_0.2FT_" + '.csv', data_yearly_dict)
 
