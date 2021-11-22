@@ -113,6 +113,12 @@ def rate_of_change(list):
     length = len(list)-1
     slope = (point2 - point1)/length
     return slope
+
+def drawdown_standard_deviation(list):
+    deviation = []
+    for i in range(len(list)):
+        deviation.append(list[i][2])
+    return deviation.std()
     
 
 
