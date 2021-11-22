@@ -95,6 +95,18 @@ def avg_drawdown_length(list):
         durations.append(list[i][2])
     return sum(durations)/len(durations)
 
+def avg_percent_difference(list):
+    difference = []
+    for i in range(len(list)):
+        difference.append(list[i][5])
+    return sum(difference)/len(difference)
+
+def avg_slope(list):
+    slope = []
+    for i in range(len(list)):
+        slope.append(list[i][6])
+    return sum(slope)/len(slope)
+
 def rate_of_change(list):
     point1 = list[0]
     point2 = list[-1]
@@ -102,6 +114,7 @@ def rate_of_change(list):
     slope = (point2 - point1)/length
     return slope
     
+
 
 def percent_difference(x,y):
     return (y-x)/x
@@ -165,12 +178,14 @@ def writeSimplePercentDifferenceCSV(filename, ListofList):
 def write_yearly_metrics_csv(filename, list):
     
     out_file = open(filename, "w")
-    out_file.write("Year, Number of Drawdowns, Percent of Year in Drawdown, Average Drawdown\n")
+    out_file.write("Year, Number of Drawdowns, Percent of Year in Drawdown, Average Days of Drawdown, Average Percent Difference, Average Rate of Change\n")
     for key in list:
         listfrequency = list_frequency(data_yearly_dict[key])
         yearlydrawdown = yearly_percent_drawdown(data_yearly_dict[key])
         averagedrawdown = avg_drawdown_length(data_yearly_dict[key])
-        out_file.write(str(key) + "," + str(listfrequency) + "," + str(yearlydrawdown) + "," + str(averagedrawdown) + "\n")
+        averagepercent = avg_percent_difference(data_yearly_dict[key])
+        averageslope = avg_slope(data_yearly_dict[key])
+        out_file.write(str(key) + "," + str(listfrequency) + "," + str(yearlydrawdown) + "," + str(averagedrawdown) + "," + str(averagepercent) + "," + str(averageslope) + "\n")
     out_file.close()
     
 
@@ -183,7 +198,7 @@ readmetadatafile = readfilename(pathname + filename)
 
 file_dimensions = filedimensions(readmetadatafile)
 
-for i in range(file_dimensions):
+for i in range(1):
     print("The file name is: {}".format(readCSVfile(readmetadatafile,i)))
     ElevationDataFrame = ReadElevationData(pathname + readCSVfile(readmetadatafile,i))
 
