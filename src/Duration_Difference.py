@@ -43,7 +43,7 @@ def ReadElevationData(filename):
 
 
 def rounding_off(number):
-    return round(number*5)/5
+    return round(number*1)/1
 
     
 #compare the elevation of each date and see if there is an increase or decrease (i.e., day 1 vs day 2; day 2 vs day 3)
@@ -180,8 +180,32 @@ def MetricsList(lists):
             mydict[get_year(lists[i][0])] = [lists[i]]
     return mydict
 
+def max_daily_drawdown_list(list):
+    drawdown = 0
+    for i in range(len(list)):
+        elev1 = list[i][3]
+        elev2 = list[i][4]
+        elev_difference = elev2 - elev1
+        if elev_difference < drawdown:
+            drawdown = elev_difference
+    return drawdown
 
+
+def max_daily_drawdown(panda_dataframe, start_date, end_date):
+    start_index = panda_dataframe.index.get_loc(start_date)
+    end_index = panda_dataframe.index.get_loc(end_date)
+    max_start_date = ""
+    daily_drawdown = 0
+    for index in range(end_index - start_index):
+        elev1 = panda_dataframe.iloc[start_index+index,0]
+        elev2 = panda_dataframe.iloc[start_index+index+1,0]
+        elev_difference = elev2 - elev1
+        if elev_difference < daily_drawdown:
+            daily_drawdown = elev_difference
+            #max_start_date = panda_dataframe.index[start_index+index]
+    return daily_drawdown
     
+ 
 
 #output a .csv or .xlsx file that will spit out the start date, end date, start elevation, end elevation, percent difference of that duration
 
@@ -196,7 +220,7 @@ def writeSimplePercentDifferenceCSV(filename, ListofList):
 def write_yearly_metrics_csv(filename, list):
     
     out_file = open(filename, "w")
-    out_file.write("Year, Number of Drawdowns, Percent of Year in Drawdown, Average Days of Drawdown, SD of Drawdown, Average Percent Difference, SD Percent Difference, Average Rate of Change, SD Rate of Change\n")
+    out_file.write("Year, Number of Drawdowns, Percent of Year in Drawdown, Average Days of Drawdown, SD of Drawdown, Average Percent Difference, SD Percent Difference, Average Rate of Change, SD Rate of Change, Max Daily Drawdown\n")
     for key in list:
         listfrequency = list_frequency(data_yearly_dict[key])
         yearlydrawdown = yearly_percent_drawdown(data_yearly_dict[key])
@@ -206,9 +230,10 @@ def write_yearly_metrics_csv(filename, list):
         SDpercent = percent_standard_deviation(data_yearly_dict[key])
         averageslope = avg_slope(data_yearly_dict[key])
         SDslope = slope_standard_deviation(data_yearly_dict[key])
-        out_file.write(str(key) + "," + str(listfrequency) + "," + str(yearlydrawdown) + "," + str(averagedrawdown) + "," + str(SDdrawdown) + "," + str(averagepercent) + "," + str(SDpercent) + "," + str(averageslope) + "," + str(SDslope) + "\n")
+        DailyDrawdown = max_daily_drawdown_list(data_yearly_dict[key])
+        out_file.write(str(key) + "," + str(listfrequency) + "," + str(yearlydrawdown) + "," + str(averagedrawdown) + "," + str(SDdrawdown) + "," + str(averagepercent) + "," + str(SDpercent) + "," + str(averageslope) + "," + str(SDslope) + "," + str(DailyDrawdown) + "\n")
     out_file.close()
-    
+
 
 # Main
 pathname = "/Users/rdel1cmc/Desktop/rdel1cmc/Desktop/Carra_ACE-IT_computer/wetlands_and_coastal/todd/bureau_of_reclamation/FY21_Info/Yale_Project/YaleProject/"
@@ -219,7 +244,9 @@ readmetadatafile = readfilename(pathname + filename)
 
 file_dimensions = filedimensions(readmetadatafile)
 
-for i in range(file_dimensions):
+output_file = open("Max_Daily_Drawdown_1ft_.csv", "w")
+output_file.write("Lake Name, Max Daily Drawdown\n")
+for i in range(1):
     print("The file name is: {}".format(readCSVfile(readmetadatafile,i)))
     ElevationDataFrame = ReadElevationData(pathname + readCSVfile(readmetadatafile,i))
 
@@ -227,7 +254,16 @@ for i in range(file_dimensions):
     end_date = getenddate(readmetadatafile,i)
 
     ListOfList = drawdown_list(ElevationDataFrame, start_date, end_date)
-    writeSimplePercentDifferenceCSV(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + "_Duration_0.2FT_" + '.csv', ListOfList)
+
+    
+    writeSimplePercentDifferenceCSV(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + "_Duration_1FT_" + '.csv', ListOfList)
     data_yearly_dict = MetricsList(ListOfList)
-    write_yearly_metrics_csv(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + "_Metrics_0.2FT_" + '.csv', data_yearly_dict)
+    write_yearly_metrics_csv(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + "_Metrics_1FT_" + '.csv', data_yearly_dict)
+    
+    #print(max_daily_drawdown(ElevationDataFrame, start_date, end_date))
+    output_file.write(str(GetOnlyFilename(readCSVfile(readmetadatafile,i))) + "," + str(max_daily_drawdown(ElevationDataFrame, start_date, end_date)) + "\n")
+output_file.close() 
+    
+
+   
 
