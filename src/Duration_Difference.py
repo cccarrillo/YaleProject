@@ -190,6 +190,36 @@ def max_daily_drawdown_list(list):
             drawdown = elev_difference
     return drawdown
 
+def daily_elev_decrease(number1,number2):
+   
+    return(number2 < number1)
+
+def daily_drawdown_check(list, number1, number2):
+    if (daily_elev_decrease(number1,number2)):
+        list.append(number1)
+        return True
+    else:
+        list.append(number1)
+        return False
+    
+def daily_drawdown_list(panda_dataframe, start_date, end_date):
+    start_index = panda_dataframe.index.get_loc(start_date)
+    end_index = panda_dataframe.index.get_loc(end_date)
+    daily_drawdown = 0
+    OutputList = []
+    list = []
+    for index in range(end_index-start_index):
+        if (daily_elev_decrease(panda_dataframe.iloc[start_index+index,0], panda_dataframe.iloc[start_index+index+1,0])):
+            date1 = panda_dataframe.index[start_index+index-len(list)+1]
+            date2 = panda_dataframe.index[start_index+index]
+            elev1 = panda_dataframe.iloc[start_index+index,0]
+            elev2 = panda_dataframe.iloc[start_index+index+1,0]
+            elev_difference = elev2 - elev1
+            if elev_difference < daily_drawdown:
+                daily_drawdown = elev_difference
+            OutputList.append([date1, date2, len(list), elev1, elev2, daily_drawdown])
+            list = []
+    return OutputList
 
 def max_daily_drawdown(panda_dataframe, start_date, end_date):
     start_index = panda_dataframe.index.get_loc(start_date)
@@ -230,7 +260,7 @@ def write_yearly_metrics_csv(filename, list):
         SDpercent = percent_standard_deviation(data_yearly_dict[key])
         averageslope = avg_slope(data_yearly_dict[key])
         SDslope = slope_standard_deviation(data_yearly_dict[key])
-        DailyDrawdown = max_daily_drawdown_list(data_yearly_dict[key])
+        DailyDrawdown = max_daily_drawdown_list(Raw_yearly_dict[key])
         out_file.write(str(key) + "," + str(listfrequency) + "," + str(yearlydrawdown) + "," + str(averagedrawdown) + "," + str(SDdrawdown) + "," + str(averagepercent) + "," + str(SDpercent) + "," + str(averageslope) + "," + str(SDslope) + "," + str(DailyDrawdown) + "\n")
     out_file.close()
 
@@ -246,7 +276,7 @@ file_dimensions = filedimensions(readmetadatafile)
 
 output_file = open("Max_Daily_Drawdown_1ft_.csv", "w")
 output_file.write("Lake Name, Max Daily Drawdown\n")
-for i in range(1):
+for i in range(file_dimensions):
     print("The file name is: {}".format(readCSVfile(readmetadatafile,i)))
     ElevationDataFrame = ReadElevationData(pathname + readCSVfile(readmetadatafile,i))
 
@@ -254,6 +284,9 @@ for i in range(1):
     end_date = getenddate(readmetadatafile,i)
 
     ListOfList = drawdown_list(ElevationDataFrame, start_date, end_date)
+    
+    UnRoundedList = daily_drawdown_list(ElevationDataFrame, start_date, end_date)
+    Raw_yearly_dict = MetricsList(UnRoundedList) 
 
     
     writeSimplePercentDifferenceCSV(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + "_Duration_1FT_" + '.csv', ListOfList)
@@ -265,5 +298,6 @@ for i in range(1):
 output_file.close() 
     
 
-   
+test = daily_drawdown_list(ElevationDataFrame, start_date, end_date)
+
 
