@@ -43,7 +43,7 @@ def ReadElevationData(filename):
 
 
 def rounding_off(number):
-    return round(number*1)/1
+    return round(number*5)/5
 
     
 #compare the elevation of each date and see if there is an increase or decrease (i.e., day 1 vs day 2; day 2 vs day 3)
@@ -290,7 +290,7 @@ file_dimensions = filedimensions(readmetadatafile)
 
 output_file = open("Max_Daily_Drawdown_1ft_.csv", "w")
 output_file.write("Lake Name, Max Daily Drawdown\n")
-for i in range(1):
+for i in range(file_dimensions):
     print("The file name is: {}".format(readCSVfile(readmetadatafile,i)))
     ElevationDataFrame = ReadElevationData(pathname + readCSVfile(readmetadatafile,i))
 
@@ -303,10 +303,10 @@ for i in range(1):
     Raw_yearly_dict = MetricsList(UnRoundedList) 
 
     
-    writeSimplePercentDifferenceCSV(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + "_Duration_1FT_" + '.csv', ListOfList)
+    writeSimplePercentDifferenceCSV(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + "_Duration_0.2FT_" + '.csv', ListOfList)
     data_yearly_dict = MetricsList(ListOfList)
-    write_yearly_metrics_csv(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + "_Metrics_1FT_" + '.csv', data_yearly_dict)
-    write_less_five_day_drawdown_CSV(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + "_Less_5_Days_1FT_" + ".csv", DiscardedListofList)
+    write_yearly_metrics_csv(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + "_Metrics_0.2FT_" + '.csv', data_yearly_dict)
+    write_less_five_day_drawdown_CSV(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + "_Less_5_Days_0.2FT_" + ".csv", DiscardedListofList)
     
     #print(max_daily_drawdown(ElevationDataFrame, start_date, end_date))
     output_file.write(str(GetOnlyFilename(readCSVfile(readmetadatafile,i))) + "," + str(max_daily_drawdown(ElevationDataFrame, start_date, end_date)) + "\n")
