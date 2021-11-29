@@ -137,6 +137,9 @@ def slope_standard_deviation(list):
 def percent_difference(x,y):
     return (y-x)/x
 
+def drawdown_difference(x,y):
+    return(y-x)
+
 def GetOnlyFilename(filename):
     return os.path.basename(filename).split('.', 1)[0]
 
@@ -161,7 +164,7 @@ def drawdown_list(elev_data, start_date, end_date):
             elif (len(list) < 5):
                 date1 = elev_data.index[start_index+index-len(list)+1]
                 date2 = elev_data.index[start_index+index]
-                DiscardedList.append([date1,date2,len(list),list[0],list[len(list)-1]]) 
+                DiscardedList.append([date1,date2,len(list),list[0],list[len(list)-1], drawdown_difference(list[0], list[len(list)-1])]) 
             list = []
         elif (len(list) >= 10):
             if list[len(list)-1] - list[len(list)-5] == 0:
@@ -250,7 +253,13 @@ def writeSimplePercentDifferenceCSV(filename, ListofList):
     for i in range(len(ListofList)):
         out_file.write(str(ListofList[i][0]) + "," + str(ListofList[i][1]) + "," + str(ListofList[i][2]) + "," + str(ListofList[i][3]) + "," + str(ListofList[i][4]) + "," + str(ListofList[i][5]) + "," + str(ListofList[i][6]) + "\n")
     out_file.close()
-    
+
+def write_less_five_day_drawdown_CSV(filename, ListofList):
+    out_file = open(filename, "w")
+    out_file.write("Start Date, End Date, Duration, Start Elevation, End Elevation, Drawdown\n")
+    for i in range(len(ListofList)):
+        out_file.write(str(ListofList[i][0]) + "," + str(ListofList[i][1]) + "," + str(ListofList[i][2]) + "," + str(ListofList[i][3]) + "," + str(ListofList[i][4]) + "," + str(ListofList[i][5]) + "\n")
+    out_file.close()
 
 def write_yearly_metrics_csv(filename, list):
     
@@ -287,8 +296,8 @@ for i in range(1):
 
     start_date = getstartdate(readmetadatafile,i)
     end_date = getenddate(readmetadatafile,i)
-'''
-    ListOfList = drawdown_list(ElevationDataFrame, start_date, end_date)
+
+    ListOfList, DiscardedListofList = drawdown_list(ElevationDataFrame, start_date, end_date)
     
     UnRoundedList = daily_drawdown_list(ElevationDataFrame, start_date, end_date)
     Raw_yearly_dict = MetricsList(UnRoundedList) 
@@ -297,13 +306,13 @@ for i in range(1):
     writeSimplePercentDifferenceCSV(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + "_Duration_1FT_" + '.csv', ListOfList)
     data_yearly_dict = MetricsList(ListOfList)
     write_yearly_metrics_csv(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + "_Metrics_1FT_" + '.csv', data_yearly_dict)
+    write_less_five_day_drawdown_CSV(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + "_Less_5_Days_1FT_" + ".csv", DiscardedListofList)
     
     #print(max_daily_drawdown(ElevationDataFrame, start_date, end_date))
     output_file.write(str(GetOnlyFilename(readCSVfile(readmetadatafile,i))) + "," + str(max_daily_drawdown(ElevationDataFrame, start_date, end_date)) + "\n")
 output_file.close() 
-   ''' 
 
-test = drawdown_list(ElevationDataFrame, start_date, end_date)
-print(test)
+
+
 
 
