@@ -147,6 +147,7 @@ def drawdown_list(elev_data, start_date, end_date):
     end_index = elev_data.index.get_loc(end_date)
     OutputList = []
     list = []
+    DiscardedList = []
     for index in range(end_index-start_index):
         if (len(list)==0):
             if (elev_decrease(elev_data.iloc[start_index+index,0], elev_data.iloc[start_index+index+1,0])):
@@ -157,6 +158,10 @@ def drawdown_list(elev_data, start_date, end_date):
                 date2 = elev_data.index[start_index+index]
                 slope = rate_of_change(list)
                 OutputList.append([date1,date2,len(list),list[0],list[len(list)-1], percent_difference(list[0],list[len(list)-1]),slope])
+            elif (len(list) < 5):
+                date1 = elev_data.index[start_index+index-len(list)+1]
+                date2 = elev_data.index[start_index+index]
+                DiscardedList.append([date1,date2,len(list),list[0],list[len(list)-1]]) 
             list = []
         elif (len(list) >= 10):
             if list[len(list)-1] - list[len(list)-5] == 0:
@@ -168,7 +173,7 @@ def drawdown_list(elev_data, start_date, end_date):
                 
                 
             
-    return (OutputList)
+    return (OutputList, DiscardedList)
 
 
 def MetricsList(lists):
@@ -276,13 +281,13 @@ file_dimensions = filedimensions(readmetadatafile)
 
 output_file = open("Max_Daily_Drawdown_1ft_.csv", "w")
 output_file.write("Lake Name, Max Daily Drawdown\n")
-for i in range(file_dimensions):
+for i in range(1):
     print("The file name is: {}".format(readCSVfile(readmetadatafile,i)))
     ElevationDataFrame = ReadElevationData(pathname + readCSVfile(readmetadatafile,i))
 
     start_date = getstartdate(readmetadatafile,i)
     end_date = getenddate(readmetadatafile,i)
-
+'''
     ListOfList = drawdown_list(ElevationDataFrame, start_date, end_date)
     
     UnRoundedList = daily_drawdown_list(ElevationDataFrame, start_date, end_date)
@@ -296,8 +301,9 @@ for i in range(file_dimensions):
     #print(max_daily_drawdown(ElevationDataFrame, start_date, end_date))
     output_file.write(str(GetOnlyFilename(readCSVfile(readmetadatafile,i))) + "," + str(max_daily_drawdown(ElevationDataFrame, start_date, end_date)) + "\n")
 output_file.close() 
-    
+   ''' 
 
-test = daily_drawdown_list(ElevationDataFrame, start_date, end_date)
+test = drawdown_list(ElevationDataFrame, start_date, end_date)
+print(test)
 
 
