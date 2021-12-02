@@ -18,7 +18,14 @@ import matplotlib.pyplot as plt
 
 def ReadElevationData(filename):
     """This function will read the csv input file (expected format "date, elevation") and index it based on the date column."""
-    return pd.read_csv(filename, index_col ="Date")
+    return pd.read_csv(filename)
+
+
+
+def truncate_dataframe(dataframe, startdate, enddate):
+    '''This function will take in the dataframe, start date, and end date and truncate the data along those values'''
+    return dataframe.truncate(before = startdate, after = enddate)
+
 
 
 test = ReadElevationData('/Users/rdel1cmc/Desktop/rdel1cmc/Desktop/Carra_ACE-IT_computer/wetlands_and_coastal/todd/bureau_of_reclamation/FY21_Info/Yale_Project/YaleProject/Data/Negative_Elevation_csv/Platoro_Reservoir_elevation_daily.csv')
@@ -28,3 +35,6 @@ test.plot()
 plt.show()
 
 
+ 
+truncated_data = truncate_dataframe(test, "3/12/16", "5/1/21")
+print(truncated_data)
