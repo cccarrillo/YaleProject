@@ -13,12 +13,18 @@ Created on Thu Nov  4 09:15:13 2021
 #read in the .csv file
 
 import pandas as pd
-
+import matplotlib.pyplot as plt
 
 
 def ReadElevationData(filename):
     """This function will read the csv input file (expected format "date, elevation") and index it based on the date column."""
     return pd.read_csv(filename, index_col ="Date")
 
+
+test = ReadElevationData('/Users/rdel1cmc/Desktop/rdel1cmc/Desktop/Carra_ACE-IT_computer/wetlands_and_coastal/todd/bureau_of_reclamation/FY21_Info/Yale_Project/YaleProject/Data/Negative_Elevation_csv/Platoro_Reservoir_elevation_daily.csv')
+
+test.plot()
+
+plt.show()
 
 
