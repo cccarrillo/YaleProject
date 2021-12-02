@@ -19,6 +19,7 @@ import numpy as np
 
 
 def ReadElevationData(filename):
+    """This function will read the input file and index it based on the date column."""
     return pd.read_csv(filename, index_col ="Date")
 
 
