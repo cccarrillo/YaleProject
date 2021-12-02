@@ -24,7 +24,7 @@ def ReadElevationData(filename):
 
 def truncate_dataframe(dataframe, startdate, enddate):
     '''This function will take in the dataframe, start date, and end date and truncate the data along those values'''
-    return dataframe.truncate(before = startdate, after = enddate)
+    return dataframe.truncate()
 
 
 
