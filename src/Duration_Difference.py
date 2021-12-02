@@ -17,7 +17,7 @@ import pandas as pd
 
 
 def ReadElevationData(filename):
-    """This function will read the csv input file and index it based on the date column."""
+    """This function will read the csv input file (expected format "date, elevation") and index it based on the date column."""
     return pd.read_csv(filename, index_col ="Date")
 
 
