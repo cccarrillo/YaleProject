@@ -13,13 +13,11 @@ Created on Thu Nov  4 09:15:13 2021
 #read in the .csv file
 
 import pandas as pd
-import os
-import numpy as np
 
 
 
 def ReadElevationData(filename):
-    """This function will read the input file and index it based on the date column."""
+    """This function will read the csv input file and index it based on the date column."""
     return pd.read_csv(filename, index_col ="Date")
 
 
