@@ -18,23 +18,6 @@ import numpy as np
 
 
 
-def readfilename(filename):
-    return pd.read_csv(filename)
-
-def readCSVfile(filename, index):
-    return filename.iloc[index,0] #pulling out a row and a column 
-
-def getstartdate(filename,index):
-    return filename.iloc[index,1]
-
-def getenddate(filename,index):
-    return filename.iloc[index,2]
-
-def filedimensions(filename):
-    return filename.shape[0]
-
-
-
 def ReadElevationData(filename):
     return pd.read_csv(filename, index_col ="Date")
 
