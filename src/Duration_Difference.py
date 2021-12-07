@@ -24,17 +24,19 @@ def ReadElevationData(filename):
 
 def truncate_dataframe(dataframe, startdate, enddate):
     '''This function will take in the dataframe, start date, and end date and truncate the data along those values'''
-    return dataframe.truncate(before=startdate, after=enddate)
+    return dataframe.truncate(before=dataframe['Date'][dataframe['Date']==pd.to_datetime(startdate)].index[0], after=dataframe['Date'][dataframe['Date']==pd.to_datetime(enddate)].index[0])
 
 
 
 test = ReadElevationData('/Users/rdel1cmc/Desktop/rdel1cmc/Desktop/Carra_ACE-IT_computer/wetlands_and_coastal/todd/bureau_of_reclamation/FY21_Info/Yale_Project/YaleProject/Data/Negative_Elevation_csv/Platoro_Reservoir_elevation_daily.csv')
-
-test.plot()
-
+test['Date']=pd.to_datetime(test['Date'])
+test.sort_values(by='Date',inplace=True)
+test.plot(x='Date')
 plt.show()
-
+print(test)
 
  
 truncated_data = truncate_dataframe(test, "3/12/16", "5/1/21")
+truncated_data.plot(x='Date')
+plt.show()
 print(truncated_data)
