@@ -35,8 +35,8 @@ def elevation_difference(dataframe):
 test = ReadElevationData('/Users/rdel1cmc/Desktop/rdel1cmc/Desktop/Carra_ACE-IT_computer/wetlands_and_coastal/todd/bureau_of_reclamation/FY21_Info/Yale_Project/YaleProject/Data/Negative_Elevation_csv/Platoro_Reservoir_elevation_daily.csv')
 test['Date']=pd.to_datetime(test['Date'])
 test.sort_values(by='Date',inplace=True)
-test.plot(x='Date')
-plt.show()
+#test.plot(x='Date')
+#plt.show()
 
 
  
@@ -45,6 +45,6 @@ truncated_data.plot(x='Date')
 plt.show()
 
 
-difference_data = elevation_difference(test)
+difference_data = elevation_difference(truncated_data)
 difference_data.plot(x='Date')
 plt.show()
