@@ -37,15 +37,14 @@ test['Date']=pd.to_datetime(test['Date'])
 test.sort_values(by='Date',inplace=True)
 test.plot(x='Date')
 plt.show()
-print(test)
+
 
  
 truncated_data = truncate_dataframe(test, "5/01/19", "5/1/21")
 truncated_data.plot(x='Date')
 plt.show()
-print(truncated_data)
+
 
 difference_data = elevation_difference(test)
 difference_data.plot(x='Date')
 plt.show()
-print(difference_data)
