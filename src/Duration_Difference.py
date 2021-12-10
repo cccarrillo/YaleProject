@@ -54,6 +54,7 @@ plt.show()
 
 find_local_max_min(truncated_data)
 
+
 temp = get_local_max_min_points(truncated_data)
 
 ax = truncated_data.plot(x='Date', y='Elevation (ft)')
