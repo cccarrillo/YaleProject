@@ -32,20 +32,31 @@ def elevation_difference(dataframe):
     dataframe['Diff'] = dataframe['Elevation (ft)'].diff()
     return 
 
+def find_local_max_min(dataframe):
+    dataframe['Max/Min'] = dataframe['Diff'] * dataframe['Diff'].shift(-1) <= 0
+    dataframe['Max/Min'].iloc[0] = True
+    dataframe['Max/Min'].iloc[-1] = True
+    return
+
+def get_local_max_min_points(dataframe):
+    return dataframe[dataframe['Max/Min'] == True]
+
 test = ReadElevationData('/Users/rdel1cmc/Desktop/rdel1cmc/Desktop/Carra_ACE-IT_computer/wetlands_and_coastal/todd/bureau_of_reclamation/FY21_Info/Yale_Project/YaleProject/Data/Negative_Elevation_csv/Platoro_Reservoir_elevation_daily.csv')
 test['Date']=pd.to_datetime(test['Date'])
 test.sort_values(by='Date',inplace=True)
-#test.plot(x='Date')
-#plt.show()
-
-
  
 truncated_data = truncate_dataframe(test, "5/01/19", "5/11/19")
-
 
 elevation_difference(truncated_data)
 truncated_data.plot(x='Date', y='Diff')
 truncated_data.plot(x='Date', y='Elevation (ft)')
 plt.show()
-print(truncated_data)
+
+find_local_max_min(truncated_data)
+
+temp = get_local_max_min_points(truncated_data)
+
+ax = truncated_data.plot(x='Date', y='Elevation (ft)')
+temp.plot.scatter(x='Date', y='Elevation (ft)', ax = ax, c='Red')
+plt.show()
 
