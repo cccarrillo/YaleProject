@@ -45,7 +45,7 @@ test = ReadElevationData('/Users/rdel1cmc/Desktop/rdel1cmc/Desktop/Carra_ACE-IT_
 test['Date']=pd.to_datetime(test['Date'])
 test.sort_values(by='Date',inplace=True)
  
-truncated_data = truncate_dataframe(test, "5/01/19", "5/11/19")
+truncated_data = truncate_dataframe(test, "5/01/19", "6/01/19")
 
 elevation_difference(truncated_data)
 truncated_data.plot(x='Date', y='Diff')
