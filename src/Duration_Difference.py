@@ -29,8 +29,8 @@ def truncate_dataframe(dataframe, startdate, enddate):
 
 def elevation_difference(dataframe):
     '''this function will take in the dataframe and then find the difference in elevation moving 1 day at a time'''
-    dataframe = dataframe['Elevation (ft)']
-    return dataframe.diff()
+    dataframe['Diff'] = dataframe['Elevation (ft)'].diff()
+    return 
 
 test = ReadElevationData('/Users/rdel1cmc/Desktop/rdel1cmc/Desktop/Carra_ACE-IT_computer/wetlands_and_coastal/todd/bureau_of_reclamation/FY21_Info/Yale_Project/YaleProject/Data/Negative_Elevation_csv/Platoro_Reservoir_elevation_daily.csv')
 test['Date']=pd.to_datetime(test['Date'])
@@ -40,11 +40,12 @@ test.sort_values(by='Date',inplace=True)
 
 
  
-truncated_data = truncate_dataframe(test, "5/01/19", "5/1/21")
-truncated_data.plot(x='Date')
-plt.show()
+truncated_data = truncate_dataframe(test, "5/01/19", "5/11/19")
 
 
-difference_data = elevation_difference(truncated_data)
-difference_data.plot(x='Date')
+elevation_difference(truncated_data)
+truncated_data.plot(x='Date', y='Diff')
+truncated_data.plot(x='Date', y='Elevation (ft)')
 plt.show()
+print(truncated_data)
+
