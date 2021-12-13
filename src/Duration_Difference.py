@@ -41,6 +41,11 @@ def find_local_max_min(dataframe):
 def get_local_max_min_points(dataframe):
     return dataframe[dataframe['Max/Min'] == True]
 
+def second_Derivative(dataframe):
+    '''This function takes the second derivative of elevation difference with respect to time. it incorporates the elevation_difference function.'''
+    dataframe['SecondDiff'] = dataframe['Diff'].diff()
+    return
+
 test = ReadElevationData('/Users/rdel1cmc/Desktop/rdel1cmc/Desktop/Carra_ACE-IT_computer/wetlands_and_coastal/todd/bureau_of_reclamation/FY21_Info/Yale_Project/YaleProject/Data/Negative_Elevation_csv/Platoro_Reservoir_elevation_daily.csv')
 test['Date']=pd.to_datetime(test['Date'])
 test.sort_values(by='Date',inplace=True)
@@ -61,3 +66,8 @@ ax = truncated_data.plot(x='Date', y='Elevation (ft)')
 temp.plot.scatter(x='Date', y='Elevation (ft)', ax = ax, c='Red')
 plt.show()
 
+second_Derivative(truncated_data)
+print(second_Derivative(truncated_data))
+truncated_data.plot(x='Date',y='SecondDiff')
+truncated_data.plot(x='Date',y='Diff')
+plt.show()
