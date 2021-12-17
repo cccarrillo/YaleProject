@@ -6,15 +6,8 @@ Created on Thu Nov  4 09:15:13 2021
 @author: rdel1cmc
 """
 
-#write a script that calculates the length of drawdown of at least 5 days within a season or year of each lake. for the drawdown length, i need to calculate the %difference over that time period. Also need to output the start date and end date of the drawdown period.
-#the way we are going to handle decimal points is that we will round to the nearest 0.5 ft. So the tenth place will either be 0 or 5.
-
-
-#read in the .csv file
-
 import pandas as pd
 import matplotlib.pyplot as plt
-
 
 def ReadElevationData(filename):
     """This function will read the csv input file (expected format "date, elevation") and index it based on the date column."""
@@ -30,9 +23,7 @@ def elevation_difference(dataframe):
     return 
 
 def find_local_max_min(dataframe):
-    dataframe['Max/Min'] = dataframe['Diff'] * dataframe['Diff'].shift(-1) <= 0
-    dataframe['Max/Min'].iloc[0] = True
-    dataframe['Max/Min'].iloc[-1] = True
+    dataframe['Max/Min'] = dataframe['Diff']+0.0000001 * dataframe['Diff'].shift(-1) < 0
     return
 
 def get_local_max_min_points(dataframe):
