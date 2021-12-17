@@ -32,7 +32,7 @@ def get_local_max_min_points(dataframe):
 def find_local_max(dataframe):
     dataframe['SecondDiff'].iloc[0] = 0.0
     dataframe['SecondDiff'].iloc[-1] = 0.0
-    return dataframe[dataframe['SecondDiff'] <= 0.0]
+    return dataframe[dataframe['SecondDiff'] < 0.0]
 
 def second_Derivative(dataframe):
     '''This function takes the second derivative of elevation difference with respect to time. it incorporates the elevation_difference function.'''
