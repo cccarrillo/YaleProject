@@ -118,10 +118,15 @@ for i in range(file_dimensions):
     test['Date']=pd.to_datetime(test['Date'])
     test.sort_values(by='Date',inplace=True)
     
+    print("test: {}".format(test))
+    
     start_date = getstartdate(readmetadatafile, i)
+    print('Start Date: {}'.format(start_date))
     end_date = getenddate(readmetadatafile,i)
+    print("End Date: {}".format(end_date))
  
     truncated_data = truncate_dataframe(test, start_date, end_date)
+    print("truncated data: {}".format(truncated_data))
     rounding_value = 2
     rounding(truncated_data,rounding_value)
 
