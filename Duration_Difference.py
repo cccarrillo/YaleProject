@@ -149,7 +149,7 @@ for i in range(file_dimensions):
 
 #print(drawdown_events)
 
-#ax = truncated_data.plot(x='Date', y='Elevation (ft)')
-#temp.plot.scatter(x='Date', y='Elevation (ft)', ax = ax, c='Red')
-#plt.show()
+ax = truncated_data.plot(x='Date', y='Elevation (ft)')
+temp.plot.scatter(x='Date', y='Elevation (ft)', ax = ax, c='Red')
+plt.show()
 
