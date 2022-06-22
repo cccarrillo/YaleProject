@@ -16,6 +16,8 @@ import pandas as pd
 import os
 import numpy as np
 
+depth = 0.2
+
 
 
 def readfilename(filename):
@@ -43,29 +45,29 @@ def ReadElevationData(filename):
 
 
 def rounding_off(number):
-    return round(number*1)/1
+    return round(number*2)/2
 
     
 #compare the elevation of each date and see if there is an increase or decrease (i.e., day 1 vs day 2; day 2 vs day 3)
 def elev_decrease(number1,number2):
-    number1 = rounding_off(number1)
-    number2 = rounding_off(number2)
-    return(number2 < number1)
+    #number1 = rounding_off(number1)
+    #number2 = rounding_off(number2)
+    return(number2 <= number1 - depth)
     
     
     
 def elev_decrease_equal(number1, number2):
-    return (number2 <= number1)
+    return elev_decrease(number1, number2)
     
 #if Day X is less or equal to Day Y, then that is included in the drawdown period.
 def drawdown_check(list, number1, number2):
-    number1 = rounding_off(number1)
-    number2 = rounding_off(number2)
+    #number1 = rounding_off(number1)
+    #number2 = rounding_off(number2)
     if (elev_decrease_equal(number1,number2)):
-        list.append(number1)
+        list.append(number2)
         return True
     else:
-        list.append(number1)
+        list.append(number2)
         return False
         
 #if the duration is less than 5 days, then it doesn't count as a drawdown event.
@@ -150,33 +152,36 @@ def drawdown_list(elev_data, start_date, end_date):
     end_index = elev_data.index.get_loc(end_date)
     OutputList = []
     list = []
-    DiscardedList = []
+    ReferencePoint = 0
+    #DiscardedList = []
     for index in range(end_index-start_index):
         if (len(list)==0):
             if (elev_decrease(elev_data.iloc[start_index+index,0], elev_data.iloc[start_index+index+1,0])):
-                list.append(rounding_off(elev_data.iloc[start_index+index,0]))
-        elif (not drawdown_check(list,elev_data.iloc[start_index+index,0], elev_data.iloc[start_index+index+1,0])):
+                ReferencePoint = start_index+index
+                list.append(elev_data.iloc[ReferencePoint,0])
+                list.append(elev_data.iloc[ReferencePoint+1,0])
+        elif (not drawdown_check(list,elev_data.iloc[ReferencePoint,0], elev_data.iloc[start_index+index+1,0])):
             if(duration_check(list)):
-                date1 = elev_data.index[start_index+index-len(list)+1]
+                date1 = elev_data.index[ReferencePoint]
                 date2 = elev_data.index[start_index+index]
                 slope = rate_of_change(list)
                 OutputList.append([date1,date2,len(list),list[0],list[len(list)-1], percent_difference(list[0],list[len(list)-1]),slope, drawdown_difference(list[0],list[len(list)-1])])
-            elif (len(list) < 5):
-                date1 = elev_data.index[start_index+index-len(list)+1]
-                date2 = elev_data.index[start_index+index]
-                DiscardedList.append([date1,date2,len(list),list[0],list[len(list)-1], drawdown_difference(list[0], list[len(list)-1])]) 
+            #elif (len(list) < 5):
+                #date1 = elev_data.index[start_index+index-len(list)+1]
+                #date2 = elev_data.index[start_index+index]
+                #DiscardedList.append([date1,date2,len(list),list[0],list[len(list)-1], drawdown_difference(list[0], list[len(list)-1])])
             list = []
         elif (len(list) >= 10):
-            if list[len(list)-1] - list[len(list)-5] == 0:
-                date1 = elev_data.index[start_index+index-len(list)+1]
+            if list[len(list)-1] - list[len(list)-5] >= 0:
+                date1 = elev_data.index[ReferencePoint]
                 date2 = elev_data.index[start_index+index]
                 slope = rate_of_change(list)
                 OutputList.append([date1,date2,len(list),list[0],list[len(list)-1], percent_difference(list[0],list[len(list)-1]),slope, drawdown_difference(list[0],list[len(list)-1])])             
                 list = []
                 
                 
-            
-    return (OutputList, DiscardedList)
+    return (OutputList)
+    #return (OutputList, DiscardedList)
 
 
 def MetricsList(lists):
@@ -277,10 +282,21 @@ def write_yearly_metrics_csv(filename, list):
         DailyDrawdown = max_daily_drawdown_list(Raw_yearly_dict[key])
         out_file.write(str(key) + "," + str(listfrequency) + "," + str(yearlydrawdown) + "," + str(averagedrawdown) + "," + str(SDdrawdown) + "," + str(averagepercent) + "," + str(SDpercent) + "," + str(averageslope) + "," + str(SDslope) + "," + str(DailyDrawdown) + "\n")
     out_file.close()
+def write_data(filename, start_date, end_date, panda_dataframe):
+    out_file = open(filename, "w")
+    out_file.write("Date, Elevation\n")
+    start_index = panda_dataframe.index.get_loc(start_date)
+    end_index = panda_dataframe.index.get_loc(end_date)
+    for index in range(end_index-start_index):
+        date = panda_dataframe.index[start_index+index]
+        elev = panda_dataframe.iloc[start_index+index,0]
+        out_file.write(str(date)+","+str(elev)+"\n")
+    out_file.close()
+    
 
 
 # Main
-pathname = "/Users/rdel1cmc/Desktop/rdel1cmc/Desktop/Carra_ACE-IT_computer/wetlands_and_coastal/todd/bureau_of_reclamation/FY21_Info/Yale_Project/YaleProject/"
+pathname = "C:/Users/RDEL1CMC/Desktop/Yale_Project/YaleProject/"
 filename = "Metadata_File_for_runs.csv"
 readmetadatafile = readfilename(pathname + filename)
 
@@ -288,29 +304,24 @@ readmetadatafile = readfilename(pathname + filename)
 
 file_dimensions = filedimensions(readmetadatafile)
 
-output_file = open("Max_Daily_Drawdown_1ft_.csv", "w")
-output_file.write("Lake Name, Max Daily Drawdown\n")
 for i in range(file_dimensions):
     print("The file name is: {}".format(readCSVfile(readmetadatafile,i)))
     ElevationDataFrame = ReadElevationData(pathname + readCSVfile(readmetadatafile,i))
 
     start_date = getstartdate(readmetadatafile,i)
     end_date = getenddate(readmetadatafile,i)
-
-    ListOfList, DiscardedListofList = drawdown_list(ElevationDataFrame, start_date, end_date)
     
-    UnRoundedList = daily_drawdown_list(ElevationDataFrame, start_date, end_date)
-    Raw_yearly_dict = MetricsList(UnRoundedList) 
+    #write_data(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + '_RawData.csv', start_date, end_date, ElevationDataFrame)
+
+    ListOfList = drawdown_list(ElevationDataFrame, start_date, end_date)
+    
+    Raw_yearly_dict = MetricsList(ListOfList)
 
     
-    writeSimplePercentDifferenceCSV(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + "_Duration_1FT_" + '.csv', ListOfList)
+    writeSimplePercentDifferenceCSV(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + "_Duration_"+str(depth)+"_FT" + '.csv', ListOfList)
     data_yearly_dict = MetricsList(ListOfList)
-    write_yearly_metrics_csv(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + "_Metrics_1FT_" + '.csv', data_yearly_dict)
-    write_less_five_day_drawdown_CSV(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + "_Less_5_Days_1FT_" + ".csv", DiscardedListofList)
-    
-    #print(max_daily_drawdown(ElevationDataFrame, start_date, end_date))
-    output_file.write(str(GetOnlyFilename(readCSVfile(readmetadatafile,i))) + "," + str(max_daily_drawdown(ElevationDataFrame, start_date, end_date)) + "\n")
-output_file.close() 
+    write_yearly_metrics_csv(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + "_Metrics_"+str(depth)+"_FT" + '.csv', data_yearly_dict)
+
 
 
 
