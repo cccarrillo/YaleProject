@@ -67,7 +67,7 @@ def drawdown_check(list, number1, number2):
         list.append(number2)
         return True
     else:
-        list.append(number2)
+        #list.append(number2)
         return False
         
 #if the duration is less than 5 days, then it doesn't count as a drawdown event.
@@ -296,7 +296,7 @@ def write_data(filename, start_date, end_date, panda_dataframe):
 
 
 # Main
-pathname = "C:/Users/RDEL1CMC/Desktop/Yale_Project/YaleProject/"
+pathname = "/Users/rdel1cmc/Desktop/rdel1cmc/Desktop/Carra_ACE-IT_computer/wetlands_and_coastal/todd/bureau_of_reclamation/FY21_Info/Yale_Project/YaleProject/"
 filename = "Metadata_File_for_runs.csv"
 readmetadatafile = readfilename(pathname + filename)
 

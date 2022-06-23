@@ -13,7 +13,7 @@ library(gridExtra) # for organizing multiple plots on a single page
 # Below is a loop that converts each individual  file into a set of figures
 
 # Folder where all the needed files are
-setwd('C:/Users/RDEL1CMC/Desktop/Yale_Project/YaleProject/src') 
+setwd('/Users/rdel1cmc/Desktop/rdel1cmc/Desktop/Carra_ACE-IT_computer/wetlands_and_coastal/todd/bureau_of_reclamation/FY21_Info/Yale_Project/YaleProject/Results/Python_results/') 
 options(warn = 1) # prints warnings as they occur
 
 files <- list.files() #list of all files in folder
@@ -68,11 +68,11 @@ sus <- c('Angostura', 'Bartlett', 'Blue', 'Deer', 'Flaming','Green', 'Jordanelle
 
 # Definitions to change depending on which set of files/folder you want to use
 
-#filesMain <- file_duration_0.2 # uncomment one filesMain
-#folder <- 'Duration_0.2ft' # uncomment one folder
+filesMain <- file_duration_0.2 # uncomment one filesMain
+folder <- 'Duration_0.2ft' # uncomment one folder
 
-filesMain <- file_metric_0.2 # uncomment one filesMain
-folder <- 'Metric_0.2ft' # uncomment one folder
+#filesMain <- file_metric_0.2 # uncomment one filesMain
+#folder <- 'Metric_0.2ft' # uncomment one folder
 
 # filesMain <- file_duration_1 # uncomment one filesMain
 # folder <- 'Duration_1ft' # uncomment one folder
@@ -89,7 +89,7 @@ for (i in 1:length(filesMain)){ # cycle through each file in the folder
   fileTrip <- filesMain[i] # choose file to access for I loop
   
   # Adjust directory - where to put the graph made in the "J loop"
-  setwd(paste('C:/Users/RDEL1CMC/Desktop/Yale_Project/YaleProject/Results/', folder, sep = '')) 
+  setwd(paste('/Users/rdel1cmc/Desktop/rdel1cmc/Desktop/Carra_ACE-IT_computer/wetlands_and_coastal/todd/bureau_of_reclamation/FY21_Info/Yale_Project/YaleProject/Results/', folder, sep = '')) 
   
   # Depending on the name of each csv file in the folder this print() line will need to change:
   # unlist(strsplit()) takes the name of the file (fileTrip) and splits it at the symbol in the quotes: in this case an upper or lowercase "_Elevation_"
@@ -102,7 +102,7 @@ for (i in 1:length(filesMain)){ # cycle through each file in the folder
   for (j in 1:length(fileTrip)){
     
     # Read in the csv
-    data <- read.csv(paste('C:/Users/RDEL1CMC/Desktop/Yale_Project/YaleProject/src/',fileTrip, sep = '')) 
+    data <- read.csv(paste('/Users/rdel1cmc/Desktop/rdel1cmc/Desktop/Carra_ACE-IT_computer/wetlands_and_coastal/todd/bureau_of_reclamation/FY21_Info/Yale_Project/YaleProject/Results/Python_results/',fileTrip, sep = '')) 
     
     if(grepl('Duration', fileTrip)){ # If the file is in the 'duration' format, this code will create 2 figs from those data
       
