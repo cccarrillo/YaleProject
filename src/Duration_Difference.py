@@ -16,7 +16,7 @@ import pandas as pd
 import os
 import numpy as np
 
-depth = 0.2
+depth = 1
 
 
 
