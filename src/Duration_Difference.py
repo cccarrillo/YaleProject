@@ -109,9 +109,14 @@ def avg_slope(list):
         slope.append(list[i][6])
     return sum(slope)/len(slope)
 
+def bottom_curve(list):
+    bottom = min(list)
+    return bottom
+    
+
 def rate_of_change(list):
     point1 = list[0]
-    point2 = list[-1]
+    point2 = bottom_curve(list)
     length = len(list)-1
     slope = (point2 - point1)/length
     return slope
@@ -165,7 +170,7 @@ def drawdown_list(elev_data, start_date, end_date):
                 date1 = elev_data.index[ReferencePoint]
                 date2 = elev_data.index[start_index+index]
                 slope = rate_of_change(list)
-                OutputList.append([date1,date2,len(list),list[0],list[len(list)-1], percent_difference(list[0],list[len(list)-1]),slope, drawdown_difference(list[0],list[len(list)-1])])
+                OutputList.append([date1,date2,len(list),list[0],bottom_curve(list), percent_difference(list[0],bottom_curve(list)),slope, drawdown_difference(list[0],bottom_curve(list))])
             #elif (len(list) < 5):
                 #date1 = elev_data.index[start_index+index-len(list)+1]
                 #date2 = elev_data.index[start_index+index]
@@ -176,7 +181,7 @@ def drawdown_list(elev_data, start_date, end_date):
                 date1 = elev_data.index[ReferencePoint]
                 date2 = elev_data.index[start_index+index]
                 slope = rate_of_change(list)
-                OutputList.append([date1,date2,len(list),list[0],list[len(list)-1], percent_difference(list[0],list[len(list)-1]),slope, drawdown_difference(list[0],list[len(list)-1])])             
+                OutputList.append([date1,date2,len(list),list[0], bottom_curve(list), percent_difference(list[0],bottom_curve(list)),slope, drawdown_difference(list[0],bottom_curve(list))])             
                 list = []
                 
                 
