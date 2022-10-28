@@ -117,7 +117,7 @@ def bottom_curve(list):
 def rate_of_change(list):
     point1 = list[0]
     point2 = bottom_curve(list)
-    length = len(list)-1
+    length = list.index(min(list))
     slope = (point2 - point1)/length
     return slope
 
@@ -259,14 +259,14 @@ def max_daily_drawdown(panda_dataframe, start_date, end_date):
 
 def writeSimplePercentDifferenceCSV(filename, ListofList):
     out_file = open(filename, "w")
-    out_file.write("Start Date, End Date, Duration, Start Elevation, End Elevation, Percent Difference, Rate of Change, Drawdown\n")
+    out_file.write("Start Date, End Date, Duration, Start Elevation, Min Elevation, Percent Difference, Rate of Change, Drawdown\n")
     for i in range(len(ListofList)):
         out_file.write(str(ListofList[i][0]) + "," + str(ListofList[i][1]) + "," + str(ListofList[i][2]) + "," + str(ListofList[i][3]) + "," + str(ListofList[i][4]) + "," + str(ListofList[i][5]) + "," + str(ListofList[i][6]) + "," + str(ListofList[i][7]) + "\n")
     out_file.close()
 
 def write_less_five_day_drawdown_CSV(filename, ListofList):
     out_file = open(filename, "w")
-    out_file.write("Start Date, End Date, Duration, Start Elevation, End Elevation, Drawdown\n")
+    out_file.write("Start Date, End Date, Duration, Start Elevation, Min Elevation, Drawdown\n")
     for i in range(len(ListofList)):
         out_file.write(str(ListofList[i][0]) + "," + str(ListofList[i][1]) + "," + str(ListofList[i][2]) + "," + str(ListofList[i][3]) + "," + str(ListofList[i][4]) + "," + str(ListofList[i][5]) + "\n")
     out_file.close()
@@ -301,7 +301,7 @@ def write_data(filename, start_date, end_date, panda_dataframe):
 
 
 # Main
-pathname = "/Users/rdel1cmc/Desktop/rdel1cmc/Desktop/Carra_ACE-IT_computer/wetlands_and_coastal/todd/bureau_of_reclamation/FY21_Info/Yale_Project/YaleProject/"
+pathname = "C:/Users/RDEL1CMC/Desktop/Yale_Project/YaleProject/"
 filename = "Metadata_File_for_runs.csv"
 readmetadatafile = readfilename(pathname + filename)
 
@@ -314,6 +314,7 @@ for i in range(file_dimensions):
     ElevationDataFrame = ReadElevationData(pathname + readCSVfile(readmetadatafile,i))
 
     start_date = getstartdate(readmetadatafile,i)
+    print("Start Date: {}".format(start_date))
     end_date = getenddate(readmetadatafile,i)
     
     #write_data(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + '_RawData.csv', start_date, end_date, ElevationDataFrame)
