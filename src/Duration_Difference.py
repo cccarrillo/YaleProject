@@ -89,7 +89,11 @@ def yearly_percent_drawdown(list):
     durations = []
     for i in range(len(list)):
         durations.append(list[i][2])
-    return sum(durations)/365
+    if (sum(durations)/365) > 1:
+        return 1
+    else:
+        return sum(durations)/365
+    
 
 def avg_drawdown_length(list):
     durations = []
@@ -102,6 +106,7 @@ def avg_percent_difference(list):
     for i in range(len(list)):
         difference.append(list[i][5])
     return sum(difference)/len(difference)
+
 
 def avg_slope(list):
     slope = []
@@ -314,7 +319,7 @@ for i in range(file_dimensions):
     ElevationDataFrame = ReadElevationData(pathname + readCSVfile(readmetadatafile,i))
 
     start_date = getstartdate(readmetadatafile,i)
-    print("Start Date: {}".format(start_date))
+    
     end_date = getenddate(readmetadatafile,i)
     
     #write_data(GetOnlyFilename(readCSVfile(readmetadatafile,i)) + '_RawData.csv', start_date, end_date, ElevationDataFrame)
