@@ -20,48 +20,5 @@ import numpy as np
 import sys 
 
 
-def readfilename(filename):
-    return pd.read_csv(filename)
-
-def readCSVfile(filename, index):
-    return filename.iloc[index,0] #pulling out a row and a column 
-
-def getstartdate(filename,index):
-    return filename.iloc[index,1]
-
-def getenddate(filename,index):
-    return filename.iloc[index,2]
-
-def filedimensions(filename):
-    return filename.shape[0]
-
-def BeginRepeatCheck(filename):
-    return pd.read_csv(filename, index_col ="Date")
-
-def date_check(panda_dataframe, start_date, end_date):
-    start_index = panda_dataframe.index.get_loc(start_date)
-    end_index = panda_dataframe.index.get_loc(end_date)
-    #OutputList = []
-    
-    #list = []
-    for i in range(end_index - start_index): 
-        if start_index == start_index + i+1:
-            sys.exit('Duplication Occurred')
-    #return ("Duplication occurred at: {}".format(start_index))
-    
-
-pathname = "C:/Users/RDEL1CMC/Desktop/Yale_Project/YaleProject/"
-filename = "Metadata_File_for_runs.csv"
-readmetadatafile = readfilename(pathname + filename)
-
-file_dimensions = filedimensions(readmetadatafile)
-
-for i in range(file_dimensions):
-    print("The file name is: {}".format(readCSVfile(readmetadatafile,i)))
-    DateFrame = BeginRepeatCheck(pathname + readCSVfile(readmetadatafile,i))
-    
-    begin_date = getstartdate(readmetadatafile,i)
-    end_date = getenddate(readmetadatafile,i)
-    trial = date_check(DateFrame, begin_date, end_date)
-
-    
+data = pd.read_csv("C:/Users/RDEL1CMC/Desktop/Yale_Project/YaleProject/Habitat_hydrological_data_2021-04-20/Established_Elevation_csv/Apache_Lake_elevation_daily.csv")
+print(data)
