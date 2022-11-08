@@ -21,4 +21,6 @@ import sys
 
 
 data = pd.read_csv("C:/Users/RDEL1CMC/Desktop/Yale_Project/YaleProject/Habitat_hydrological_data_2021-04-20/Established_Elevation_csv/Apache_Lake_elevation_daily.csv")
-print(data)
+date = data.loc[:,"Date"]
+print(date)
+
