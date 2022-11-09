@@ -20,12 +20,13 @@ import numpy as np
 import sys 
 
 
-data = pd.read_csv("C:/Users/RDEL1CMC/Desktop/Yale_Project/YaleProject/Negative_Elevation_csv/Flatiron_Reservoir_elevation_daily.csv")
+data = pd.read_csv("C:/Users/RDEL1CMC/Desktop/Yale_Project/YaleProject/Habitat_hydrological_data_2021-04-20/Suspect_Elevation_csv/WillardBay_Elevation_daily.csv")
 
 for i in data:
     date = data.loc[:,"Date"]
     new_date = date.to_string(index=False)
     print(new_date)
+    print("Start Date: {}".format(new_date))
     duplicate = date[date.duplicated()]
     print("Duplicated Dates: {}".format(duplicate.to_string(index=False)))
     
