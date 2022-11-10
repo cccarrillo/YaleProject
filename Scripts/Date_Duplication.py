@@ -20,7 +20,7 @@ import numpy as np
 import sys 
 
 
-data = pd.read_csv("C:/Users/RDEL1CMC/Desktop/Yale_Project/YaleProject/Habitat_hydrological_data_2021-04-20/Suspect_Elevation_csv/PuebloReservoir_Elevation_daily_duplicates_removed.csv")
+data = pd.read_csv("C:/Users/RDEL1CMC/Desktop/Yale_Project/YaleProject/Negative_Elevation_csv/Davis_Creek_Reservoir_elevation_daily.csv")
 
 for i in data:
     list = []
