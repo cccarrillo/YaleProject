@@ -175,7 +175,7 @@ def drawdown_list(elev_data, start_date, end_date):
                 date1 = elev_data.index[ReferencePoint]
                 date2 = elev_data.index[start_index+index]
                 slope = rate_of_change(list)
-                OutputList.append([date1,date2,len(list),list[0],bottom_curve(list), percent_difference(list[0],bottom_curve(list)),slope, drawdown_difference(list[0],bottom_curve(list))])
+                OutputList.append([date1,date2,index-ReferencePoint,list[0],bottom_curve(list), percent_difference(list[0],bottom_curve(list)),slope, drawdown_difference(list[0],bottom_curve(list))])
             #elif (len(list) < 5):
                 #date1 = elev_data.index[start_index+index-len(list)+1]
                 #date2 = elev_data.index[start_index+index]
@@ -186,7 +186,7 @@ def drawdown_list(elev_data, start_date, end_date):
                 date1 = elev_data.index[ReferencePoint]
                 date2 = elev_data.index[start_index+index]
                 slope = rate_of_change(list)
-                OutputList.append([date1,date2,len(list),list[0], bottom_curve(list), percent_difference(list[0],bottom_curve(list)),slope, drawdown_difference(list[0],bottom_curve(list))])             
+                OutputList.append([date1,date2,index-ReferencePoint,list[0], bottom_curve(list), percent_difference(list[0],bottom_curve(list)),slope, drawdown_difference(list[0],bottom_curve(list))])             
                 list = []
                 
                 
